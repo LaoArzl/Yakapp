@@ -3,7 +3,7 @@ import {View, Text, SafeAreaView, ScrollView, Image} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import HeaderBack from '../Shared/HeaderBack';
 
-const Login = ({navigation}) => {
+const Register = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -83,4 +83,4 @@ const Login = ({navigation}) => {
   );
 };
 
-export default Login;
+export default Register;

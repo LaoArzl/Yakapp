@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import Login from './Login';
+import NotLogin from './NotLogin';
 
-const Profile = () => {
-  return <Login />;
+const Profile = ({navigation}) => {
+  const [isLogin, setIsLogin] = useState(false);
+  return <>{isLogin ? null : <NotLogin nav={navigation} />}</>;
 };
 
 export default Profile;

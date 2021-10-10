@@ -7,39 +7,27 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Surface} from 'react-native-paper';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Home = ({navigation}) => {
-  var months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  let getDate = new Date();
-  let getMonth = months[getDate.getMonth()];
-  let getDay = getDate.getUTCDate();
   return (
     <>
       <StatusBar backgroundColor="#000" />
       <SafeAreaView style={styles.homeContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.headerBackground}>
-            <Image
+          <LinearGradient
+            colors={['#407BFF', '#40C6FF']}
+            start={{x: 0.0, y: 0.0}}
+            end={{x: 1.0, y: 0.0}}
+            style={styles.headerBackground}>
+            {/* <Image
               source={require('../Assets/blob.png')}
               style={{
                 position: 'absolute',
@@ -49,17 +37,53 @@ const Home = ({navigation}) => {
                 height: 500,
                 zIndex: 1,
               }}
+            /> */}
+
+            {/* <Image
+              style={styles.headerImage}
+              source={require('../Assets/wave.png')}
+            /> */}
+            <Image
+              style={{
+                position: 'absolute',
+                width: 160,
+                height: 160,
+                right: 25,
+                top: -55,
+              }}
+              source={require('../Assets/orange-triangle.png')}
             />
 
             <Image
-              style={styles.headerImage}
-              source={require('../Assets/wave.png')}
+              style={{
+                position: 'absolute',
+                width: 160,
+                height: 160,
+                right: -8,
+                top: 50,
+              }}
+              source={require('../Assets/pink-triangle.png')}
+            />
+
+            <Image
+              style={{
+                width: 140,
+                height: 140,
+                position: 'absolute',
+                right: -95,
+                top: -10,
+              }}
+              source={require('../Assets/circle.png')}
             />
             <Text style={styles.headerText}>Hello Arzl James</Text>
             <Text style={styles.greetings}>How are you today?</Text>
-          </View>
+          </LinearGradient>
 
-          <View style={styles.headerExtension}></View>
+          <LinearGradient
+            colors={['#407BFF', '#40C6FF']}
+            start={{x: 0.0, y: 0.0}}
+            end={{x: 1.0, y: 0.0}}
+            style={styles.headerExtension}></LinearGradient>
 
           <View style={styles.categoryContainer}>
             <View style={styles.categoryContainer2}>
@@ -70,7 +94,9 @@ const Home = ({navigation}) => {
                 <Text style={styles.IconLabel}>Bookmark</Text>
               </View>
               <View style={styles.categoryDivider}>
-                <TouchableOpacity style={styles.IconContainer}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('DictionaryStackScreen')}
+                  style={styles.IconContainer}>
                   <SimpleLineIcons name="book-open" size={20} color="#407BFF" />
                 </TouchableOpacity>
                 <Text style={styles.IconLabel}>Dictionary</Text>
@@ -83,14 +109,16 @@ const Home = ({navigation}) => {
               </View>
               <View style={styles.categoryDivider}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Scan')}
+                  onPress={() => navigation.navigate('ScanStack')}
                   style={styles.IconContainer}>
                   <SimpleLineIcons name="camera" size={20} color="#407BFF" />
                 </TouchableOpacity>
                 <Text style={styles.IconLabel}>Scan</Text>
               </View>
               <View style={styles.categoryDivider}>
-                <TouchableOpacity style={styles.IconContainer}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Translate')}
+                  style={styles.IconContainer}>
                   <MaterialCommunityIcons
                     name="google-translate"
                     size={20}
@@ -128,7 +156,9 @@ const Home = ({navigation}) => {
                 </Text>
               </View>
               <View>
-                <Text style={{fontFamily: 'Poppins-Regular', color: '#808080'}}>
+                <Text
+                  onPress={() => navigation.navigate('All')}
+                  style={{fontFamily: 'Poppins-Regular', color: '#808080'}}>
                   View All
                 </Text>
               </View>
@@ -143,30 +173,38 @@ const Home = ({navigation}) => {
                   borderRadius: 10,
                   overflow: 'hidden',
                   marginRight: 20,
-                  borderWidth: 1,
-                  borderColor: '#dedede',
                 }}>
-                <View
+                <ImageBackground
+                  resizeMode="cover"
                   style={{
-                    height: '65%',
-                    overflow: 'hidden',
-                  }}>
-                  <Image
-                    resizeMode="cover"
-                    style={{width: '100%'}}
-                    source={require('../Assets/2.jpg')}
-                  />
-                </View>
+                    height: '100%',
+                  }}
+                  source={require('../Assets/BG/1.png')}
+                />
                 <View
                   style={{
                     height: '35%',
                     justifyContent: 'center',
                     paddingLeft: 20,
+                    position: 'absolute',
+                    bottom: 0,
+                    backgroundColor: '#000',
+                    width: '100%',
+                    opacity: 0.4,
+                  }}></View>
+                <View
+                  style={{
+                    height: '35%',
+                    justifyContent: 'center',
+                    paddingLeft: 20,
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
                   }}>
                   <Text
                     style={{
                       fontFamily: 'Poppins-SemiBold',
-                      color: '#272727',
+                      color: '#FFF',
                       fontSize: 18,
                     }}>
                     Beginner
@@ -175,7 +213,7 @@ const Home = ({navigation}) => {
                     style={{
                       fontFamily: 'Poppins-Regular',
                       marginTop: -5,
-                      color: '#808080',
+                      color: '#FFF',
                     }}>
                     7 Chapters - 20 mins
                   </Text>
@@ -189,39 +227,48 @@ const Home = ({navigation}) => {
                   backgroundColor: '#fff',
                   borderRadius: 10,
                   overflow: 'hidden',
-                  borderWidth: 1,
-                  borderColor: '#dedede',
+                  marginRight: 20,
                 }}>
-                <View
+                <ImageBackground
+                  resizeMode="cover"
                   style={{
-                    height: '65%',
-                    overflow: 'hidden',
-                  }}>
-                  <Image
-                    resizeMode="cover"
-                    style={{width: '100%'}}
-                    source={require('../Assets/2.jpg')}
-                  />
-                </View>
+                    height: '100%',
+                  }}
+                  source={require('../Assets/BG/2.png')}
+                />
                 <View
                   style={{
                     height: '35%',
                     justifyContent: 'center',
                     paddingLeft: 20,
+                    position: 'absolute',
+                    bottom: 0,
+                    backgroundColor: '#000',
+                    width: '100%',
+                    opacity: 0.4,
+                  }}></View>
+                <View
+                  style={{
+                    height: '35%',
+                    justifyContent: 'center',
+                    paddingLeft: 20,
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
                   }}>
                   <Text
                     style={{
                       fontFamily: 'Poppins-SemiBold',
-                      color: '#272727',
+                      color: '#FFF',
                       fontSize: 18,
                     }}>
-                    Beginner
+                    Intermediate
                   </Text>
                   <Text
                     style={{
                       fontFamily: 'Poppins-Regular',
                       marginTop: -5,
-                      color: '#808080',
+                      color: '#FFF',
                     }}>
                     7 Chapters - 20 mins
                   </Text>
@@ -252,13 +299,12 @@ const styles = StyleSheet.create({
   greetings: {
     color: '#CED9FF',
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Medium',
     marginTop: -5,
     zIndex: 4,
   },
 
   headerBackground: {
-    backgroundColor: '#407BFF',
     height: 150,
     paddingLeft: 20,
     justifyContent: 'center',
@@ -273,7 +319,6 @@ const styles = StyleSheet.create({
   },
   headerExtension: {
     height: 50,
-    backgroundColor: '#407BFF',
     zIndex: -1,
   },
   categoryContainer: {
