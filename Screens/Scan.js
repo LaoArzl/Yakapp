@@ -13,6 +13,7 @@ import TesseractOcr, {
   LANG_ENGLISH,
   useEventListener,
 } from 'react-native-tesseract-ocr';
+import {Vocabulary} from '../Screens/Dictionary/Vocabulary';
 
 const DEFAULT_HEIGHT = 500;
 const DEFAULT_WITH = 600;
@@ -105,7 +106,9 @@ function Scan() {
           {isLoading ? (
             <ProgressCircle showsText progress={progress} />
           ) : (
-            <Text>{text.toLocaleLowerCase()} </Text>
+            <>
+              <Text>{text.toLocaleLowerCase()}</Text>
+            </>
           )}
         </View>
       )}

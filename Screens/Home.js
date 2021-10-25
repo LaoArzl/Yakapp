@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,7 +7,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  ImageBackground,
+  FlatList,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,8 +15,30 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
+import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({navigation}) => {
+  const lesson = useSelector(state => state.lesson.value);
+  const appState = useSelector(state => state.appState.value);
+  const [userValue, setUserValue] = useState('');
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('user_details');
+      if (value !== null) {
+        setUserValue(value);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    console.log(userValue);
+  }, [appState]);
+
   return (
     <>
       <StatusBar backgroundColor="#000" />
@@ -27,22 +49,6 @@ const Home = ({navigation}) => {
             start={{x: 0.0, y: 0.0}}
             end={{x: 1.0, y: 0.0}}
             style={styles.headerBackground}>
-            {/* <Image
-              source={require('../Assets/blob.png')}
-              style={{
-                position: 'absolute',
-                top: -250,
-                left: -150,
-                width: 400,
-                height: 500,
-                zIndex: 1,
-              }}
-            /> */}
-
-            {/* <Image
-              style={styles.headerImage}
-              source={require('../Assets/wave.png')}
-            /> */}
             <Image
               style={{
                 position: 'absolute',
@@ -88,12 +94,6 @@ const Home = ({navigation}) => {
           <View style={styles.categoryContainer}>
             <View style={styles.categoryContainer2}>
               <View style={styles.categoryDivider}>
-                <TouchableOpacity style={styles.IconContainer}>
-                  <Ionicons name="bookmark-outline" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Bookmark</Text>
-              </View>
-              <View style={styles.categoryDivider}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('DictionaryStackScreen')}
                   style={styles.IconContainer}>
@@ -101,12 +101,7 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={styles.IconLabel}>Dictionary</Text>
               </View>
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity style={styles.IconContainer}>
-                  <SimpleLineIcons name="note" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Notes</Text>
-              </View>
+
               <View style={styles.categoryDivider}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('ScanStack')}
@@ -126,13 +121,6 @@ const Home = ({navigation}) => {
                   />
                 </TouchableOpacity>
                 <Text style={styles.IconLabel}>Translate</Text>
-              </View>
-
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity style={styles.IconContainer}>
-                  <AntDesign name="linechart" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Progress</Text>
               </View>
             </View>
           </View>
@@ -155,16 +143,56 @@ const Home = ({navigation}) => {
                   Lessons for you
                 </Text>
               </View>
-              <View>
-                <Text
-                  onPress={() => navigation.navigate('All')}
-                  style={{fontFamily: 'Poppins-Regular', color: '#808080'}}>
-                  View All
-                </Text>
-              </View>
             </View>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {lesson.map(e => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    width: '100%',
+                    height: 100,
+                    backgroundColor: '#f4f4f4',
+                    borderRadius: 10,
+                    marginBottom: 15,
+                    padding: 20,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <View
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 20,
+                      marginRight: 20,
+                    }}>
+                    <Image
+                      style={{width: 60, height: 60}}
+                      source={require('../Assets/book.png')}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-SemiBold',
+                        color: '#272727',
+                        fontSize: 16,
+                      }}>
+                      {e.lessonTitle}
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-regular',
+                        color: '#272727',
+                      }}>
+                      {e.chapters.length} Chapters
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+
+            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <TouchableOpacity
                 style={{
                   width: 300,
@@ -274,7 +302,7 @@ const Home = ({navigation}) => {
                   </Text>
                 </View>
               </TouchableOpacity>
-            </ScrollView>
+            </ScrollView> */}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -286,7 +314,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   homeContainer: {
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#fff',
     flex: 1,
   },
   headerText: {
@@ -335,7 +363,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingVertical: 20,
-    borderRadius: 20,
+    borderRadius: 10,
     elevation: 1,
   },
   categoryDivider: {
@@ -344,10 +372,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
   },
+
+  categoryDividerDiactive: {
+    width: '33.33%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    opacity: 0.2,
+  },
   IconContainer: {
     height: 50,
     width: 50,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#ECF1F4',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 18,

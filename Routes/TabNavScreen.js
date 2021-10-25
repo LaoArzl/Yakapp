@@ -5,7 +5,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Home from '../Screens/Home';
 import Notifications from '../Screens/Notifications';
-import Settings from '../Screens/Settings';
 import Profile from '../Screens/Profile';
 import Search from '../Screens/Search';
 
@@ -14,6 +13,7 @@ const Tab = createMaterialBottomTabNavigator();
 const TabNavScreen = () => {
   return (
     <Tab.Navigator
+      shifting={false}
       initialRouteName="Home"
       barStyle={{
         backgroundColor: '#fff',
@@ -61,9 +61,9 @@ const TabNavScreen = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({color, focused}) => {
-            let iconName = 'search';
+            let iconName = 'heart';
             return (
-              <FontAwesome5
+              <Ionicons
                 name={iconName}
                 size={focused ? 18 : 22}
                 color={color}
@@ -72,7 +72,7 @@ const TabNavScreen = () => {
           },
           headerShown: false,
         }}
-        name="Search"
+        name="Favorites"
         component={Search}
       />
       <Tab.Screen

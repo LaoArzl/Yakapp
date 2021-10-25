@@ -13,6 +13,7 @@ const HeaderBack = props => {
         borderBottomColor: '#dedede',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: props.background ? props.background : '#fff',
       }}>
       <TouchableOpacity
@@ -25,12 +26,13 @@ const HeaderBack = props => {
           height: '100%',
           width: '10%',
           justifyContent: 'center',
+          position: 'absolute',
+          left: 20,
         }}>
         <Feather name="chevron-left" size={26} color="#272727" />
       </TouchableOpacity>
       <Text
         style={{
-          marginLeft: 15,
           marginTop: 4,
           color: '#272727',
           fontFamily: 'Poppins-Medium',

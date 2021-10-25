@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import Dictionary from '../Screens/Dictionary';
-import Meaning from '../Screens/Meaning';
+import Dictionary from '../Screens/Dictionary/Dictionary';
+import Meaning from '../Screens/Dictionary/Meaning';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();

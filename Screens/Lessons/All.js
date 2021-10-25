@@ -13,7 +13,7 @@ import {Searchbar} from 'react-native-paper';
 const All = ({navigation}) => {
   return (
     <SafeAreaView style={{backgroundColor: '#fff', flex: 1}}>
-      <HeaderBack nav={navigation} border={true} title="Lessons" />
+      <HeaderBack nav={navigation} title="Lessons" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{padding: 20}}>
           <View style={{marginBottom: 20}}>

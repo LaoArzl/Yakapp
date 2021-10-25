@@ -16,8 +16,8 @@ import LinearGradient from 'react-native-linear-gradient';
 const Translate = ({navigation}) => {
   const [word, setWord] = useState(0);
   return (
-    <SafeAreaView style={{backgroundColor: '#F4F4F4', flex: 1}}>
-      <HeaderBack nav={navigation} title="Translate" border={true} />
+    <SafeAreaView style={{backgroundColor: '#fff', flex: 1}}>
+      <HeaderBack border nav={navigation} title="Translate" />
       <ScrollView showsHorizontalScrollIndicator={false} style={{padding: 20}}>
         {/* <View
           style={{
@@ -52,7 +52,7 @@ const Translate = ({navigation}) => {
         <View
           style={{
             height: 'auto',
-            backgroundColor: '#fff',
+            backgroundColor: '#F4F4F4',
             borderRadius: 10,
             overflow: 'hidden',
             marginBottom: 20,
