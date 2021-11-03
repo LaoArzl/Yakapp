@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {Searchbar} from 'react-native-paper';
-import {Vocabulary} from './Vocabulary';
+import {useSelector} from 'react-redux';
 
 const Dictionary = ({navigation}) => {
+  const word = useSelector(state => state.word.value);
   const [masterData, setMasterData] = useState([]);
   const [filterData, setFileterDate] = useState([]);
   const [query, setQuery] = useState('');
@@ -18,7 +20,7 @@ const Dictionary = ({navigation}) => {
   const handleSearch = e => {
     if (e) {
       const newData = masterData.filter(item => {
-        const itemData = item.name.toUpperCase();
+        const itemData = item.Yakan.toUpperCase();
         const textData = e.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -27,13 +29,13 @@ const Dictionary = ({navigation}) => {
       setQuery(e);
     } else {
       setQuery(e);
-      setFileterDate(masterData);
+      setFileterDate(word);
     }
   };
 
   useEffect(() => {
-    setFileterDate(Vocabulary);
-    setMasterData(Vocabulary);
+    setFileterDate(word);
+    setMasterData(word);
   }, []);
 
   const [on, setOn] = useState(true);
@@ -43,7 +45,7 @@ const Dictionary = ({navigation}) => {
       {on && (
         <View
           style={{
-            height: 60,
+            height: 55,
             paddingHorizontal: 20,
             flexDirection: 'row',
             alignItems: 'center',
@@ -56,10 +58,10 @@ const Dictionary = ({navigation}) => {
               height: '100%',
               width: '10%',
               justifyContent: 'center',
+              alignItems: 'flex-start',
             }}>
-            <Feather name="chevron-left" size={26} color="#fff" />
+            <Ionicons name="arrow-back" size={26} color="#fff" />
           </TouchableOpacity>
-
           <Text
             style={{
               fontFamily: 'Poppins-Medium',
@@ -69,64 +71,85 @@ const Dictionary = ({navigation}) => {
             }}>
             Dictionary
           </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              setOn(false);
-            }}
-            style={{
-              height: '100%',
-              width: '10%',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-            }}>
-            <Feather name="search" size={20} color="#fff" />
-          </TouchableOpacity>
+          {on && (
+            <TouchableOpacity
+              onPress={() => {
+                setOn(false);
+              }}
+              style={{
+                height: '100%',
+                width: '10%',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+              }}>
+              <Feather name="search" size={20} color="#fff" />
+            </TouchableOpacity>
+          )}
         </View>
       )}
+
       {on === false && (
         <View
           style={{
-            height: 60,
+            height: 55,
             paddingHorizontal: 20,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: '#407BFF',
+            backgroundColor: '#fff',
+            borderBottomWidth: 1,
+            borderBottomColor: '#d3d3d3',
           }}>
           <View style={{width: '80%'}}>
             <Searchbar
+              iconColor="#407BFF"
               onChangeText={e => handleSearch(e)}
               autoFocus={true}
               placeholder="Search word"
               inputStyle={{
                 fontSize: 14,
+                marginBottom: -2,
               }}
               style={{
-                height: 40,
+                height: 35,
                 width: '100%',
                 borderWidth: 0,
-                borderRadius: 100,
+                borderRadius: 4,
                 elevation: 0,
-                backgroundColor: '#fff',
+
+                backgroundColor: '#f4f4f4',
               }}
             />
           </View>
-          <Text
-            onPress={() => setOn(true)}
+          <View
             style={{
-              color: '#fff',
-              fontFamily: 'Poppins-Regular',
-              textDecorationLine: 'underline',
+              width: '20%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minWidth: 70,
             }}>
-            Cancel
-          </Text>
+            <Text
+              onPress={() => {
+                setOn(true);
+                setQuery('');
+                setFileterDate(word);
+              }}
+              style={{
+                color: '#407BFF',
+                fontFamily: 'Poppins-Regular',
+
+                paddingTop: 4,
+                fontSize: 13,
+              }}>
+              Cancel
+            </Text>
+          </View>
         </View>
       )}
 
       <FlatList
         keyExtractor={(item, index) => index.toString()}
-        data={filterData.sort((a, b) => a.name.localeCompare(b.name))}
+        data={filterData}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => navigation.navigate('Meaning', {item})}
@@ -135,6 +158,7 @@ const Dictionary = ({navigation}) => {
               alignItems: 'center',
               flexDirection: 'row',
               paddingLeft: 20,
+              backgroundColor: '#fff',
             }}>
             <Text
               style={{
@@ -142,7 +166,7 @@ const Dictionary = ({navigation}) => {
                 textTransform: 'capitalize',
                 color: '#272727',
               }}>
-              {item.name}
+              {item.Yakan}
             </Text>
           </TouchableOpacity>
         )}

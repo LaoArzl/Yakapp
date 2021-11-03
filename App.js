@@ -15,37 +15,36 @@ import Axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {updateLesson} from './features/lessons';
 
+import OnBoardingScreen from './Shared/OnBoardingScreen';
+import Lesson from './Screens/Lessons/Lesson';
+import Chapter from './Screens/Lessons/Chapter';
+import {updateFilterWord} from './features/filterWord';
+import {updateMasterWord} from './features/masterWord';
+import {updateWord} from './features/words';
+
 const Stack = createNativeStackNavigator();
 
 function App() {
   const dispatch = useDispatch();
+  const [onBoard, setOnBoard] = useState(true);
   const user = useSelector(state => state.user.value);
   const appState = useSelector(state => state.appState.value);
   const [userValue, setUserValue] = useState([]);
 
-  const storeData = async value => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem('user_details', jsonValue);
-    } catch (e) {}
-  };
-
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('user_details');
-      if (jsonValue != null) {
-        setUserValue(JSON.parse(jsonValue));
-      } else {
-        setUserValue(null);
+      const value = await AsyncStorage.getItem('onBoarding');
+      if (value !== null) {
+        setOnBoard(value);
       }
     } catch (e) {
-      console.log(e);
+      // error reading value
     }
   };
 
   useEffect(() => {
-    storeData(storeData({isLoggedin: false, skipLogin: false}));
-  }, [appState]);
+    console.log(getData());
+  }, []);
 
   useEffect(() => {
     Axios.get('http://10.0.2.2:3001/add-lesson')
@@ -55,9 +54,24 @@ function App() {
       .catch(e => console.log(e));
   }, [appState]);
 
+  useEffect(() => {
+    Axios.get('http://10.0.2.2:3001/words')
+      .then(response => {
+        dispatch(updateWord(response.data));
+      })
+      .catch(e => console.log(e));
+  }, [appState]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        {onBoard !== 'no' && (
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="OnBoardingScreen"
+            component={OnBoardingScreen}
+          />
+        )}
         <Stack.Screen
           options={{headerShown: false}}
           name="TabScreen"
@@ -94,6 +108,16 @@ function App() {
           options={{headerShown: false}}
           name="Login"
           component={Login}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Lesson"
+          component={Lesson}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Chapter"
+          component={Chapter}
         />
       </Stack.Navigator>
     </NavigationContainer>

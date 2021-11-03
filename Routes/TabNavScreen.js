@@ -13,7 +13,7 @@ const Tab = createMaterialBottomTabNavigator();
 const TabNavScreen = () => {
   return (
     <Tab.Navigator
-      shifting={false}
+      shifting={true}
       initialRouteName="Home"
       barStyle={{
         backgroundColor: '#fff',
@@ -22,7 +22,7 @@ const TabNavScreen = () => {
         height: 55,
       }}
       activeColor="#407BFF"
-      inactiveColor="#BBBBBB">
+      inactiveColor="#808080">
       <Tab.Screen
         options={{
           tabBarIcon: ({color, focused}) => {

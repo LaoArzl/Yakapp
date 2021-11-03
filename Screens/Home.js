@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -17,8 +18,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Home = ({navigation}) => {
+  const {width, height} = Dimensions.get('window');
   const lesson = useSelector(state => state.lesson.value);
   const appState = useSelector(state => state.appState.value);
   const [userValue, setUserValue] = useState('');
@@ -36,7 +40,6 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     getData();
-    console.log(userValue);
   }, [appState]);
 
   return (
@@ -54,8 +57,9 @@ const Home = ({navigation}) => {
                 position: 'absolute',
                 width: 160,
                 height: 160,
-                right: 25,
+                right: 15,
                 top: -55,
+                opacity: 0.85,
               }}
               source={require('../Assets/orange-triangle.png')}
             />
@@ -65,13 +69,14 @@ const Home = ({navigation}) => {
                 position: 'absolute',
                 width: 160,
                 height: 160,
-                right: -8,
-                top: 50,
+                right: -40,
+                top: 70,
+                opacity: 0.9,
               }}
               source={require('../Assets/pink-triangle.png')}
             />
 
-            <Image
+            {/* <Image
               style={{
                 width: 140,
                 height: 140,
@@ -80,8 +85,19 @@ const Home = ({navigation}) => {
                 top: -10,
               }}
               source={require('../Assets/circle.png')}
+            /> */}
+
+            <Image
+              style={{
+                width: 150,
+                height: 150,
+                position: 'absolute',
+                right: 20,
+                bottom: 0,
+              }}
+              source={require('../Assets/saly.png')}
             />
-            <Text style={styles.headerText}>Hello Arzl James</Text>
+            <Text style={styles.headerText}>Hello User</Text>
             <Text style={styles.greetings}>How are you today?</Text>
           </LinearGradient>
 
@@ -122,6 +138,28 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={styles.IconLabel}>Translate</Text>
               </View>
+              <View style={styles.categoryDivider}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('ScanStack')}
+                  style={styles.IconContainer}>
+                  <Feather name="bookmark" size={20} color="#407BFF" />
+                </TouchableOpacity>
+                <Text style={styles.IconLabel}>Bookmark</Text>
+              </View>
+              <View style={styles.categoryDivider}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Translate')}
+                  style={styles.IconContainer}>
+                  <Ionicons name="pencil" size={22} color="#407BFF" />
+                </TouchableOpacity>
+                <Text style={styles.IconLabel}>Notepad</Text>
+              </View>
+              <View style={styles.categoryDivider}>
+                <TouchableOpacity style={styles.IconContainer}>
+                  <AntDesign name="linechart" size={20} color="#407BFF" />
+                </TouchableOpacity>
+                <Text style={styles.IconLabel}>Progress</Text>
+              </View>
             </View>
           </View>
 
@@ -145,32 +183,64 @@ const Home = ({navigation}) => {
               </View>
             </View>
 
-            {lesson.map(e => {
+            {lesson.map((e, key) => {
               return (
                 <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Lesson', {
+                      lesson: e,
+                      color:
+                        key % 3 === 0
+                          ? '#628AE5'
+                          : key % 3 === 1
+                          ? '#C975E7'
+                          : '#EEB178',
+                    })
+                  }
+                  key={key + e._id}
                   style={{
                     width: '100%',
-                    height: 100,
-                    backgroundColor: '#f4f4f4',
-                    borderRadius: 10,
-                    marginBottom: 15,
-                    padding: 20,
-                    alignItems: 'center',
+                    height: 90,
+                    backgroundColor: '#fff',
                     flexDirection: 'row',
+                    alignItems: 'center',
+                    position: 'relative',
                   }}>
+                  <Entypo
+                    style={{position: 'absolute', right: 10}}
+                    name="chevron-small-right"
+                    size={24}
+                    color="#272727"
+                  />
                   <View
                     style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 20,
+                      width: 50,
+                      height: 50,
+                      borderRadius: 10,
                       marginRight: 20,
+                      elevation: 1,
+                      backgroundColor:
+                        key % 3 === 0
+                          ? '#628AE5'
+                          : key % 3 === 1
+                          ? '#C975E7'
+                          : '#EEB178',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}>
                     <Image
-                      style={{width: 60, height: 60}}
+                      style={{width: '90%', height: '90%'}}
                       source={require('../Assets/book.png')}
                     />
                   </View>
-                  <View>
+                  <View
+                    style={{
+                      borderBottomWidth: key + 1 === lesson.length ? 0 : 1,
+                      borderBottomColor: '#d3d3d3',
+                      width: width - 120,
+                      height: '100%',
+                      justifyContent: 'center',
+                    }}>
                     <Text
                       style={{
                         fontFamily: 'Poppins-SemiBold',
@@ -182,8 +252,8 @@ const Home = ({navigation}) => {
 
                     <Text
                       style={{
-                        fontFamily: 'Poppins-regular',
-                        color: '#272727',
+                        fontFamily: 'Poppins-Regular',
+                        color: '#55555C',
                       }}>
                       {e.chapters.length} Chapters
                     </Text>
@@ -191,118 +261,6 @@ const Home = ({navigation}) => {
                 </TouchableOpacity>
               );
             })}
-
-            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity
-                style={{
-                  width: 300,
-                  height: 200,
-                  backgroundColor: '#fff',
-                  borderRadius: 10,
-                  overflow: 'hidden',
-                  marginRight: 20,
-                }}>
-                <ImageBackground
-                  resizeMode="cover"
-                  style={{
-                    height: '100%',
-                  }}
-                  source={require('../Assets/BG/1.png')}
-                />
-                <View
-                  style={{
-                    height: '35%',
-                    justifyContent: 'center',
-                    paddingLeft: 20,
-                    position: 'absolute',
-                    bottom: 0,
-                    backgroundColor: '#000',
-                    width: '100%',
-                    opacity: 0.4,
-                  }}></View>
-                <View
-                  style={{
-                    height: '35%',
-                    justifyContent: 'center',
-                    paddingLeft: 20,
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-SemiBold',
-                      color: '#FFF',
-                      fontSize: 18,
-                    }}>
-                    Beginner
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Regular',
-                      marginTop: -5,
-                      color: '#FFF',
-                    }}>
-                    7 Chapters - 20 mins
-                  </Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={{
-                  width: 300,
-                  height: 200,
-                  backgroundColor: '#fff',
-                  borderRadius: 10,
-                  overflow: 'hidden',
-                  marginRight: 20,
-                }}>
-                <ImageBackground
-                  resizeMode="cover"
-                  style={{
-                    height: '100%',
-                  }}
-                  source={require('../Assets/BG/2.png')}
-                />
-                <View
-                  style={{
-                    height: '35%',
-                    justifyContent: 'center',
-                    paddingLeft: 20,
-                    position: 'absolute',
-                    bottom: 0,
-                    backgroundColor: '#000',
-                    width: '100%',
-                    opacity: 0.4,
-                  }}></View>
-                <View
-                  style={{
-                    height: '35%',
-                    justifyContent: 'center',
-                    paddingLeft: 20,
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-SemiBold',
-                      color: '#FFF',
-                      fontSize: 18,
-                    }}>
-                    Intermediate
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Regular',
-                      marginTop: -5,
-                      color: '#FFF',
-                    }}>
-                    7 Chapters - 20 mins
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </ScrollView> */}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -325,9 +283,9 @@ const styles = StyleSheet.create({
     zIndex: 4,
   },
   greetings: {
-    color: '#CED9FF',
+    color: '#D3E1FF',
     fontSize: 16,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Regular',
     marginTop: -5,
     zIndex: 4,
   },
@@ -363,8 +321,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingVertical: 20,
-    borderRadius: 10,
-    elevation: 1,
+    borderRadius: 20,
+    elevation: 4,
   },
   categoryDivider: {
     width: '33.33%',
@@ -393,6 +351,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     marginTop: 10,
     fontSize: 12,
-    color: '#272727',
+    color: '#55555C',
   },
 });

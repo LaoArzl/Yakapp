@@ -75,13 +75,23 @@ const Translate = ({navigation}) => {
               English
             </Text>
           </View>
-          <View style={{height: 100, paddingHorizontal: 20}}>
+          <View
+            style={{
+              height: 100,
+              paddingHorizontal: 20,
+            }}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <TextInput
+                autoFocus={true}
                 onChangeText={text => setWord(text)}
                 maxLength={30}
+                multiline={true}
                 placeholder="Input text here"
-                style={{fontFamily: 'Poppins-Regular', color: '#272727'}}
+                style={{
+                  fontFamily: 'Poppins-Regular',
+                  color: '#272727',
+                  height: 'auto',
+                }}
               />
             </ScrollView>
           </View>

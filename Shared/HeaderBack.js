@@ -1,16 +1,17 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const HeaderBack = props => {
   return (
     <View
       style={{
-        height: 60,
+        height: 55,
         paddingHorizontal: 20,
         width: '100%',
-        borderBottomWidth: props.border === true ? 1 : 0,
-        borderBottomColor: '#dedede',
+        borderBottomWidth: props.border === true ? 0.5 : 0,
+        borderBottomColor: '#d3d3d3',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -29,7 +30,11 @@ const HeaderBack = props => {
           position: 'absolute',
           left: 20,
         }}>
-        <Feather name="chevron-left" size={26} color="#272727" />
+        <Ionicons
+          name="arrow-back"
+          size={26}
+          color={props.color ? props.color : '#407BFF'}
+        />
       </TouchableOpacity>
       <Text
         style={{

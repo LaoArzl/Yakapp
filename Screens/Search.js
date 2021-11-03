@@ -46,10 +46,10 @@ const Search = () => {
               }}
               style={{
                 elevation: 0,
-                height: 40,
+                height: 35,
                 backgroundColor: '#eee',
                 padding: 0,
-                borderRadius: 100,
+                borderRadius: 4,
               }}
               placeholder="Search and discover things"
             />

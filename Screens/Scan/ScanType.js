@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,6 +17,7 @@ import TesseractOcr, {
 import HeaderBack from '../../Shared/HeaderBack';
 import {Button} from 'react-native-paper';
 import {Vocabulary} from '../Dictionary/Vocabulary';
+import {useSelector} from 'react-redux';
 
 const DEFAULT_HEIGHT = 500;
 const DEFAULT_WITH = 600;
@@ -27,6 +28,7 @@ const defaultPickerOptions = {
 };
 
 function ScanType({navigation}) {
+  const word = useSelector(state => state.word.value);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [imgSrc, setImgSrc] = useState(null);
@@ -51,11 +53,15 @@ function ScanType({navigation}) {
         recognizedText
           .split(' ')
           .map(
-            word =>
-              word &&
-              Vocabulary.filter(e => e.eng === word.toLocaleLowerCase()).map(
-                f => f.name,
-              ),
+            w =>
+              w &&
+              word
+                .filter(
+                  e =>
+                    e.English === w.toLocaleLowerCase() ||
+                    e.Yakan === w.toLocaleLowerCase(),
+                )
+                .map(f => (w === f.Yakan ? f.English : f.Yakan)),
           )
           .join(' '),
       );
@@ -99,13 +105,6 @@ function ScanType({navigation}) {
         <Text style={styles.instructions}>Select an image source:</Text>
         <View style={styles.options}>
           <View style={styles.button}>
-            {/* <Button
-              disabled={isLoading}
-              title="Camera"
-              onPress={() => {
-                recognizeFromCamera();
-              }}
-            /> */}
             <Button
               icon="camera"
               disabled={isLoading}

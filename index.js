@@ -8,12 +8,18 @@ import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './features/user';
 import appStateReducer from './features/appState';
 import lessonReducer from './features/lessons';
+import wordReducer from './features/words';
+import filterWordReducer from './features/filterWord';
+import masterWordReducer from './features/masterWord';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     appState: appStateReducer,
     lesson: lessonReducer,
+    word: wordReducer,
+    filterWord: filterWordReducer,
+    masterWord: masterWordReducer,
   },
 });
 

@@ -59,7 +59,7 @@ const Meaning = ({navigation, route}) => {
               textTransform: 'capitalize',
               color: '#fff',
             }}>
-            {item.name}
+            {item.Yakan}
             <Text style={{marginRight: 10}}> </Text>
           </Text>
         </View>
@@ -73,7 +73,7 @@ const Meaning = ({navigation, route}) => {
               marginBottom: 40,
               fontSize: 16,
             }}>
-            {item.meaning}
+            {item.Meaning}
           </Text>
 
           <Text
@@ -93,7 +93,7 @@ const Meaning = ({navigation, route}) => {
               fontSize: 16,
               textTransform: 'capitalize',
             }}>
-            {item.eng}
+            {item.English}
           </Text>
         </View>
       </ScrollView>
