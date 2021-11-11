@@ -10,7 +10,7 @@ const LessonStack = ({route}) => {
   return (
     <Stack.Navigator>
       <Stack.Group screenOptions={{headerShown: false}}>
-        <Stack.Screen item="sds" name="Lesson" component={Lesson} />
+        <Stack.Screen name="Lesson" component={Lesson} />
         <Stack.Screen name="Chapter" component={Chapter} />
       </Stack.Group>
     </Stack.Navigator>

@@ -3,6 +3,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Home from '../Screens/Home';
 import Notifications from '../Screens/Notifications';
 import Profile from '../Screens/Profile';
@@ -61,9 +62,9 @@ const TabNavScreen = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({color, focused}) => {
-            let iconName = 'heart';
+            let iconName = 'search';
             return (
-              <Ionicons
+              <FontAwesome
                 name={iconName}
                 size={focused ? 18 : 22}
                 color={color}

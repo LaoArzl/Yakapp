@@ -14,13 +14,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {updateLesson} from './features/lessons';
+import NotepadStack from './Routes/NotepadStack';
 
 import OnBoardingScreen from './Shared/OnBoardingScreen';
 import Lesson from './Screens/Lessons/Lesson';
 import Chapter from './Screens/Lessons/Chapter';
-import {updateFilterWord} from './features/filterWord';
-import {updateMasterWord} from './features/masterWord';
 import {updateWord} from './features/words';
+import Splash from './Shared/Splash';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +30,7 @@ function App() {
   const user = useSelector(state => state.user.value);
   const appState = useSelector(state => state.appState.value);
   const [userValue, setUserValue] = useState([]);
+  const [splash, setSplash] = useState(true);
 
   const getData = async () => {
     try {
@@ -61,6 +62,14 @@ function App() {
       })
       .catch(e => console.log(e));
   }, [appState]);
+
+  useEffect(() => {
+    setTimeout(() => setSplash(false), 3000);
+  }, []);
+
+  if (splash) {
+    return <Splash />;
+  }
 
   return (
     <NavigationContainer>
@@ -118,6 +127,11 @@ function App() {
           options={{headerShown: false}}
           name="Chapter"
           component={Chapter}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="NotepadStack"
+          component={NotepadStack}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -20,6 +20,7 @@ import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {Searchbar} from 'react-native-paper';
 
 const Home = ({navigation}) => {
   const {width, height} = Dimensions.get('window');
@@ -76,17 +77,6 @@ const Home = ({navigation}) => {
               source={require('../Assets/pink-triangle.png')}
             />
 
-            {/* <Image
-              style={{
-                width: 140,
-                height: 140,
-                position: 'absolute',
-                right: -95,
-                top: -10,
-              }}
-              source={require('../Assets/circle.png')}
-            /> */}
-
             <Image
               style={{
                 width: 150,
@@ -97,90 +87,97 @@ const Home = ({navigation}) => {
               }}
               source={require('../Assets/saly.png')}
             />
+
             <Text style={styles.headerText}>Hello User</Text>
             <Text style={styles.greetings}>How are you today?</Text>
           </LinearGradient>
 
-          <LinearGradient
-            colors={['#407BFF', '#40C6FF']}
-            start={{x: 0.0, y: 0.0}}
-            end={{x: 1.0, y: 0.0}}
-            style={styles.headerExtension}></LinearGradient>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 20,
+              marginTop: 20,
+            }}>
+            <Text
+              style={{
+                color: '#272727',
+                fontSize: 20,
+                fontFamily: 'Poppins-SemiBold',
+              }}>
+              Categories
+            </Text>
+          </View>
+          <View style={styles.categoryContainer2}>
+            <View style={styles.categoryDivider}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('DictionaryStackScreen')}
+                style={styles.IconContainer}>
+                <MaterialCommunityIcons
+                  name="book-search"
+                  size={22}
+                  color="#407BFF"
+                />
+              </TouchableOpacity>
+              <Text style={styles.IconLabel}>Dictionary</Text>
+            </View>
 
-          <View style={styles.categoryContainer}>
-            <View style={styles.categoryContainer2}>
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('DictionaryStackScreen')}
-                  style={styles.IconContainer}>
-                  <SimpleLineIcons name="book-open" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Dictionary</Text>
-              </View>
+            <View style={styles.categoryDivider}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ScanStack')}
+                style={styles.IconContainer}>
+                <Ionicons name="heart" size={22} color="#407BFF" />
+              </TouchableOpacity>
+              <Text style={styles.IconLabel}>Favorites</Text>
+            </View>
 
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('ScanStack')}
-                  style={styles.IconContainer}>
-                  <SimpleLineIcons name="camera" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Scan</Text>
-              </View>
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Translate')}
-                  style={styles.IconContainer}>
-                  <MaterialCommunityIcons
-                    name="google-translate"
-                    size={20}
-                    color="#407BFF"
-                  />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Translate</Text>
-              </View>
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('ScanStack')}
-                  style={styles.IconContainer}>
-                  <Feather name="bookmark" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Bookmark</Text>
-              </View>
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Translate')}
-                  style={styles.IconContainer}>
-                  <Ionicons name="pencil" size={22} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Notepad</Text>
-              </View>
-              <View style={styles.categoryDivider}>
-                <TouchableOpacity style={styles.IconContainer}>
-                  <AntDesign name="linechart" size={20} color="#407BFF" />
-                </TouchableOpacity>
-                <Text style={styles.IconLabel}>Progress</Text>
-              </View>
+            <View style={styles.categoryDivider}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('NotepadStack')}
+                style={styles.IconContainer}>
+                <Ionicons name="pencil" size={22} color="#407BFF" />
+              </TouchableOpacity>
+              <Text style={styles.IconLabel}>Notepad</Text>
+            </View>
+
+            <View style={styles.categoryDivider}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Translate')}
+                style={styles.IconContainer}>
+                <MaterialCommunityIcons
+                  name="google-translate"
+                  size={20}
+                  color="#407BFF"
+                />
+              </TouchableOpacity>
+              <Text style={styles.IconLabel}>Translate</Text>
             </View>
           </View>
 
-          <View style={{padding: 20, marginTop: 20}}>
+          <View
+            style={{
+              height: 6,
+              width: '100%',
+              backgroundColor: '#dedede',
+            }}></View>
+
+          <View style={{padding: 20}}>
             <View
               style={{
-                marginBottom: 20,
+                marginBottom: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <View>
-                <Text
-                  style={{
-                    color: '#272727',
-                    fontSize: 20,
-                    fontFamily: 'Poppins-SemiBold',
-                  }}>
-                  Lessons for you
-                </Text>
-              </View>
+              <Text
+                style={{
+                  color: '#272727',
+                  fontSize: 20,
+                  fontFamily: 'Poppins-SemiBold',
+                }}>
+                Lessons for you
+              </Text>
             </View>
 
             {lesson.map((e, key) => {
@@ -205,6 +202,9 @@ const Home = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     position: 'relative',
+                    marginBottom: 2,
+                    borderBottomWidth: key + 1 === lesson.length ? 0 : 1,
+                    borderBottomColor: 'lightgrey',
                   }}>
                   <Entypo
                     style={{position: 'absolute', right: 10}}
@@ -216,7 +216,7 @@ const Home = ({navigation}) => {
                     style={{
                       width: 50,
                       height: 50,
-                      borderRadius: 10,
+                      borderRadius: 8,
                       marginRight: 20,
                       elevation: 1,
                       backgroundColor:
@@ -229,14 +229,12 @@ const Home = ({navigation}) => {
                       justifyContent: 'center',
                     }}>
                     <Image
-                      style={{width: '90%', height: '90%'}}
+                      style={{width: '85%', height: '90%'}}
                       source={require('../Assets/book.png')}
                     />
                   </View>
                   <View
                     style={{
-                      borderBottomWidth: key + 1 === lesson.length ? 0 : 1,
-                      borderBottomColor: '#d3d3d3',
                       width: width - 120,
                       height: '100%',
                       justifyContent: 'center',
@@ -246,17 +244,35 @@ const Home = ({navigation}) => {
                         fontFamily: 'Poppins-SemiBold',
                         color: '#272727',
                         fontSize: 16,
+                        marginBottom: 5,
                       }}>
                       {e.lessonTitle}
                     </Text>
 
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        color: '#55555C',
-                      }}>
-                      {e.chapters.length} Chapters
-                    </Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#55555C',
+                          fontSize: 12,
+                        }}>
+                        {e.chapters.length} Chapters •{' '}
+                      </Text>
+                      <Ionicons
+                        style={{marginRight: 4}}
+                        name="timer-outline"
+                        size={15}
+                        color="#55555C"
+                      />
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Medium',
+                          color: '#55555C',
+                          fontSize: 12,
+                        }}>
+                        {e.chapters.length * 2} mins
+                      </Text>
+                    </View>
                   </View>
                 </TouchableOpacity>
               );
@@ -292,8 +308,10 @@ const styles = StyleSheet.create({
 
   headerBackground: {
     height: 150,
-    paddingLeft: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   headerImage: {
     position: 'absolute',
@@ -307,28 +325,18 @@ const styles = StyleSheet.create({
     height: 50,
     zIndex: -1,
   },
-  categoryContainer: {
-    height: 'auto',
-    paddingHorizontal: 20,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    transform: [{translateY: -50}],
-    marginBottom: -50,
-  },
 
   categoryContainer2: {
     backgroundColor: '#fff',
     flexDirection: 'row',
-    flexWrap: 'wrap',
     paddingVertical: 20,
-    borderRadius: 20,
-    elevation: 4,
+    justifyContent: 'space-between',
   },
   categoryDivider: {
-    width: '33.33%',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 5,
+    width: '25%',
   },
 
   categoryDividerDiactive: {
@@ -344,13 +352,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECF1F4',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 18,
+    borderRadius: 100,
     marginBottom: 5,
   },
   IconLabel: {
     fontFamily: 'Poppins-Regular',
     marginTop: 10,
     fontSize: 12,
-    color: '#55555C',
+    color: '#272727',
   },
 });

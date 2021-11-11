@@ -90,13 +90,15 @@ const Lesson = ({navigation, route}) => {
                 }}
                 style={{
                   width: '100%',
-                  height: 70,
-                  marginBottom: 15,
-                  backgroundColor: '#f4f4f4',
+                  height: 75,
+                  marginBottom: 10,
+                  backgroundColor: '#fff',
                   paddingHorizontal: 20,
                   justifyContent: 'center',
                   borderRadius: 10,
-                  elevation: 1,
+                  // elevation: 1,
+                  borderWidth: 1,
+                  borderColor: '#d3d3d3',
                 }}>
                 <AntDesign
                   style={{position: 'absolute', right: 20}}
@@ -106,7 +108,7 @@ const Lesson = ({navigation, route}) => {
                 />
                 <Text
                   style={{
-                    fontFamily: 'Poppins-Medium',
+                    fontFamily: 'Poppins-SemiBold',
                     marginBottom: -2,
                     color: '#272727',
                   }}>

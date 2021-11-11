@@ -17,7 +17,12 @@ const Translate = ({navigation}) => {
   const [word, setWord] = useState(0);
   return (
     <SafeAreaView style={{backgroundColor: '#fff', flex: 1}}>
-      <HeaderBack border nav={navigation} title="Translate" />
+      <HeaderBack
+        nav={navigation}
+        title="Translate"
+        color="#fff"
+        background="#407BFF"
+      />
       <ScrollView showsHorizontalScrollIndicator={false} style={{padding: 20}}>
         {/* <View
           style={{

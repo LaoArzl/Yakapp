@@ -100,7 +100,7 @@ function ScanType({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderBack border nav={navigation} title="Scan" />
+      <HeaderBack nav={navigation} title="Scan" />
       <ScrollView>
         <Text style={styles.instructions}>Select an image source:</Text>
         <View style={styles.options}>

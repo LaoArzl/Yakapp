@@ -39,7 +39,7 @@ const HeaderBack = props => {
       <Text
         style={{
           marginTop: 4,
-          color: '#272727',
+          color: props.color ? props.color : '#272727',
           fontFamily: 'Poppins-Medium',
           fontSize: 18,
         }}>

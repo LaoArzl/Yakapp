@@ -5,7 +5,7 @@ const Chapter = ({navigation, route}) => {
   const {chapter} = route.params;
   return (
     <View>
-      <Text>{chapter.title}</Text>
+      <Text>{chapter.content}</Text>
     </View>
   );
 };
