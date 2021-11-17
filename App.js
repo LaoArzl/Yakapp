@@ -5,9 +5,9 @@ import DictionaryStackScreen from './Routes/DictionaryStack';
 import Login from './Screens/Login';
 import TabNavScreen from './Routes/TabNavScreen';
 import All from './Screens/Lessons/All';
-import Translate from './Screens/Translate';
 import ScanStack from './Routes/ScanStack';
 import AdminStack from './Routes/AdminStack';
+import TranslateStack from './Routes/TranslateStack';
 import NotLogin from './Screens/NotLogin';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -99,8 +99,8 @@ function App() {
         />
         <Stack.Screen
           options={{headerShown: false}}
-          name="Translate"
-          component={Translate}
+          name="TranslateStack"
+          component={TranslateStack}
         />
         <Stack.Screen
           options={{headerShown: false}}

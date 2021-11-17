@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ProgressCircle from 'react-native-progress/Circle';
@@ -18,6 +19,8 @@ import HeaderBack from '../../Shared/HeaderBack';
 import {Button} from 'react-native-paper';
 import {Vocabulary} from '../Dictionary/Vocabulary';
 import {useSelector} from 'react-redux';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
 
 const DEFAULT_HEIGHT = 500;
 const DEFAULT_WITH = 600;
@@ -99,41 +102,83 @@ function ScanType({navigation}) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderBack nav={navigation} title="Scan" />
-      <ScrollView>
-        <Text style={styles.instructions}>Select an image source:</Text>
-        <View style={styles.options}>
-          <View style={styles.button}>
-            <Button
-              icon="camera"
-              disabled={isLoading}
-              mode="contained"
-              onPress={() => {
-                recognizeFromCamera();
+    <>
+      <StatusBar backgroundColor="#fff" />
+      <SafeAreaView style={styles.container}>
+        <View
+          style={{
+            height: 55,
+            width: '100%',
+            justifyContent: 'center',
+            paddingHorizontal: 20,
+            alignItems: 'flex-end',
+            position: 'absolute',
+            top: 0,
+          }}>
+          <FontAwesome5
+            onPress={() => navigation.goBack()}
+            name="times"
+            size={20}
+            color="#407BFF"
+          />
+        </View>
+        <Text style={styles.instructions}>Choose image source:</Text>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            onPress={() => {
+              recognizeFromCamera();
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              backgroundColor: '#407BFF',
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 15,
+            }}>
+            <Feather
+              style={{marginBottom: 5}}
+              name="camera"
+              size={30}
+              color="#fff"
+            />
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'Poppins-Regular',
+                fontSize: 12,
               }}>
               Camera
-            </Button>
-
-            <Button
-              icon="image"
-              disabled={isLoading}
-              mode="contained"
-              onPress={() => {
-                recognizeFromPicker();
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              recognizeFromPicker();
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              backgroundColor: '#407BFF',
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Feather
+              style={{marginBottom: 5}}
+              name="image"
+              size={30}
+              color="#fff"
+            />
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'Poppins-Regular',
+                fontSize: 12,
               }}>
-              Picker
-            </Button>
-          </View>
-          <View style={styles.button}>
-            {/* <Button
-              disabled={isLoading}
-              title="Picker"
-              onPress={() => {
-                recognizeFromPicker();
-              }}
-            /> */}
-          </View>
+              Gallery
+            </Text>
+          </TouchableOpacity>
         </View>
         {imgSrc && (
           <View style={styles.imageContainer}>
@@ -145,14 +190,64 @@ function ScanType({navigation}) {
                 <Text>Detected Word/s: {text.toLowerCase()}</Text>
                 <Text>
                   Translated Word/s:{' '}
-                  {translated.length === 0 ? 'No words detected' : translated}
+                  {translated.length === 0 ? text : translated}
                 </Text>
               </>
             )}
           </View>
         )}
-      </ScrollView>
-    </SafeAreaView>
+        {/* <ScrollView>
+          <View style={styles.options}>
+            <View style={styles.button}>
+              <Button
+                icon="camera"
+                disabled={isLoading}
+                mode="contained"
+                onPress={() => {
+                  recognizeFromCamera();
+                }}>
+                Camera
+              </Button>
+
+              <Button
+                icon="image"
+                disabled={isLoading}
+                mode="contained"
+                onPress={() => {
+                  recognizeFromPicker();
+                }}>
+                Picker
+              </Button>
+            </View>
+            <View style={styles.button}>
+              <Button
+                disabled={isLoading}
+                title="Picker"
+                onPress={() => {
+                  recognizeFromPicker();
+                }}
+              />
+            </View>
+          </View>
+          {imgSrc && (
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={imgSrc} />
+              {isLoading ? (
+                <ProgressCircle showsText progress={progress} />
+              ) : (
+                <>
+                  <Text>Detected Word/s: {text.toLowerCase()}</Text>
+                  <Text>
+                    Translated Word/s:{' '}
+                    {translated.length === 0 ? text : translated}
+                  </Text>
+                </>
+              )}
+            </View>
+          )}
+        </ScrollView> */}
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -187,9 +282,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   instructions: {
+    fontFamily: 'Poppins-Medium',
     textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    color: '#272727',
+    marginBottom: 20,
   },
 });
 

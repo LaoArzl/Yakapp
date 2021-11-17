@@ -138,12 +138,12 @@ const Home = ({navigation}) => {
                 style={styles.IconContainer}>
                 <Ionicons name="pencil" size={22} color="#407BFF" />
               </TouchableOpacity>
-              <Text style={styles.IconLabel}>Notepad</Text>
+              <Text style={styles.IconLabel}>Notes</Text>
             </View>
 
             <View style={styles.categoryDivider}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Translate')}
+                onPress={() => navigation.navigate('TranslateStack')}
                 style={styles.IconContainer}>
                 <MaterialCommunityIcons
                   name="google-translate"

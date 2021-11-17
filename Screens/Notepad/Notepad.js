@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import HeaderBack from '../../Shared/HeaderBack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 const Notepad = ({navigation}) => {
   return (
@@ -17,7 +18,7 @@ const Notepad = ({navigation}) => {
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <HeaderBack
           nav={navigation}
-          title="Notepad"
+          title="Notes"
           background="#407BFF"
           color="#fff"
         />
@@ -103,6 +104,23 @@ const Notepad = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </ScrollView>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Create')}
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: 50,
+            backgroundColor: '#407BFF',
+            position: 'absolute',
+            right: 20,
+            bottom: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 0,
+            elevation: 8,
+          }}>
+          <SimpleLineIcons name="note" size={20} color="#fff" />
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );
