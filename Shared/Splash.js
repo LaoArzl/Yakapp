@@ -24,7 +24,7 @@ const Splash = () => {
           color: '#55555C',
           fontSize: 14,
         }}>
-        Yakan Translation Application
+        Yakan Translation App
       </Text>
     </View>
   );

@@ -42,6 +42,7 @@ const HeaderBack = props => {
           color: props.color ? props.color : '#272727',
           fontFamily: 'Poppins-Medium',
           fontSize: 18,
+          textTransform: 'capitalize',
         }}>
         {props.title}
       </Text>

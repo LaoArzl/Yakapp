@@ -21,6 +21,12 @@ const storeData = async value => {
   } catch (e) {}
 };
 
+const storeNote = async value => {
+  try {
+    await AsyncStorage.setItem('note', value);
+  } catch (e) {}
+};
+
 const slides = [
   {
     id: 1,
@@ -127,6 +133,7 @@ const OnBoardingScreen = ({navigation}) => {
                 onPress={() => {
                   navigation.replace('TabScreen');
                   storeData('no');
+                  storeNote([{}]);
                 }}>
                 <Text
                   style={{

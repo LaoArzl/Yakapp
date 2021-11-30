@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,28 @@ import {
 import HeaderBack from '../../Shared/HeaderBack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Notepad = ({navigation}) => {
+  const [data, setData] = useState([]);
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('note');
+      return jsonValue != null ? setData(JSON.parse(jsonValue)) : null;
+    } catch (e) {
+      // error reading value
+    }
+  };
+  useEffect(() => {
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (error, stores) => {
+        stores.map((result, i, store) => {
+          console.log({[store[i][0]]: store[i][1]});
+          return true;
+        });
+      });
+    });
+  }, []);
   return (
     <>
       <StatusBar backgroundColor="#407BFF" />

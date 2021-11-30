@@ -21,6 +21,8 @@ import {Vocabulary} from '../Dictionary/Vocabulary';
 import {useSelector} from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const DEFAULT_HEIGHT = 500;
 const DEFAULT_WITH = 600;
@@ -104,160 +106,218 @@ function ScanType({navigation}) {
   return (
     <>
       <StatusBar backgroundColor="#fff" />
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={{flex: 1, backgroundColor: imgSrc ? '#f4f4f4' : '#fff'}}>
         <View
           style={{
             height: 55,
             width: '100%',
             justifyContent: 'center',
             paddingHorizontal: 20,
-            alignItems: 'flex-end',
-            position: 'absolute',
-            top: 0,
+            backgroundColor: '#fff',
           }}>
-          <FontAwesome5
+          <Ionicons
             onPress={() => navigation.goBack()}
-            name="times"
-            size={20}
+            name="arrow-back"
+            size={26}
             color="#407BFF"
           />
         </View>
-        <Text style={styles.instructions}>Choose image source:</Text>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity
-            onPress={() => {
-              recognizeFromCamera();
-            }}
-            style={{
-              width: 100,
-              height: 100,
-              backgroundColor: '#407BFF',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: 15,
-            }}>
-            <Feather
-              style={{marginBottom: 5}}
-              name="camera"
-              size={30}
-              color="#fff"
-            />
-            <Text
+        <ScrollView>
+          {imgSrc === null && (
+            <View
               style={{
-                color: '#fff',
-                fontFamily: 'Poppins-Regular',
-                fontSize: 12,
+                paddingHorizontal: 20,
+                alignItems: 'center',
+                marginTop: 100,
               }}>
-              Camera
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              recognizeFromPicker();
-            }}
-            style={{
-              width: 100,
-              height: 100,
-              backgroundColor: '#407BFF',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Feather
-              style={{marginBottom: 5}}
-              name="image"
-              size={30}
-              color="#fff"
-            />
-            <Text
-              style={{
-                color: '#fff',
-                fontFamily: 'Poppins-Regular',
-                fontSize: 12,
-              }}>
-              Gallery
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {imgSrc && (
-          <View style={styles.imageContainer}>
-            <Image style={styles.image} source={imgSrc} />
-            {isLoading ? (
-              <ProgressCircle showsText progress={progress} />
-            ) : (
-              <>
-                <Text>Detected Word/s: {text.toLowerCase()}</Text>
-                <Text>
-                  Translated Word/s:{' '}
-                  {translated.length === 0 ? text : translated}
-                </Text>
-              </>
-            )}
-          </View>
-        )}
-        {/* <ScrollView>
-          <View style={styles.options}>
-            <View style={styles.button}>
-              <Button
-                icon="camera"
-                disabled={isLoading}
-                mode="contained"
-                onPress={() => {
-                  recognizeFromCamera();
-                }}>
-                Camera
-              </Button>
-
-              <Button
-                icon="image"
-                disabled={isLoading}
-                mode="contained"
-                onPress={() => {
-                  recognizeFromPicker();
-                }}>
-                Picker
-              </Button>
-            </View>
-            <View style={styles.button}>
-              <Button
-                disabled={isLoading}
-                title="Picker"
-                onPress={() => {
-                  recognizeFromPicker();
-                }}
-              />
-            </View>
-          </View>
-          {imgSrc && (
-            <View style={styles.imageContainer}>
-              <Image style={styles.image} source={imgSrc} />
-              {isLoading ? (
-                <ProgressCircle showsText progress={progress} />
-              ) : (
-                <>
-                  <Text>Detected Word/s: {text.toLowerCase()}</Text>
-                  <Text>
-                    Translated Word/s:{' '}
-                    {translated.length === 0 ? text : translated}
+              <Text style={styles.instructions}>Choose image source:</Text>
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    recognizeFromCamera();
+                  }}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: '#407BFF',
+                    borderRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 15,
+                    elevation: 8,
+                  }}>
+                  <Feather
+                    style={{marginBottom: 5}}
+                    name="camera"
+                    size={30}
+                    color="#fff"
+                  />
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 12,
+                    }}>
+                    Camera
                   </Text>
-                </>
-              )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    recognizeFromPicker();
+                  }}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: '#407BFF',
+                    borderRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    elevation: 8,
+                  }}>
+                  <Feather
+                    style={{marginBottom: 5}}
+                    name="image"
+                    size={30}
+                    color="#fff"
+                  />
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 12,
+                    }}>
+                    Gallery
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
-        </ScrollView> */}
+          {imgSrc && (
+            <>
+              <View style={styles.imageContainer}>
+                <Image style={styles.image} source={imgSrc} />
+              </View>
+
+              <View
+                style={{
+                  marginTop: 20,
+                  width: '100%',
+                  height: 'auto',
+                  paddingHorizontal: 20,
+                  paddingTop: 40,
+                }}>
+                {isLoading ? (
+                  <ProgressCircle showsText progress={progress} />
+                ) : (
+                  <>
+                    {/* <Text>Detected Word/s: {text.toLowerCase()}</Text> */}
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-SemiBold',
+                        color: '#272727',
+                        fontSize: 16,
+                        marginBottom: 10,
+                      }}>
+                      Detected Text
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Regular',
+                        color: '#407BFF',
+                        fontSize: 20,
+                        marginBottom: 30,
+                        marginLeft: 10,
+                      }}>
+                      {text}
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-SemiBold',
+                        color: '#272727',
+                        fontSize: 16,
+                        marginBottom: 10,
+                      }}>
+                      Translation
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Regular',
+                        color: '#407BFF',
+                        fontSize: 20,
+                        marginLeft: 10,
+                      }}>
+                      {translated.length === 0
+                        ? 'No translation 🙁'
+                        : translated.replace(',', '/')}
+                    </Text>
+
+                    {/* <View
+                      style={{
+                        height: 'auto',
+                        borderRadius: 5,
+                        overflow: 'hidden',
+                        marginBottom: 20,
+                        backgroundColor: '#407BFF',
+                      }}>
+                      <View
+                        style={{
+                          height: 50,
+                          justifyContent: 'space-between',
+                          flexDirection: 'row',
+                          paddingHorizontal: 20,
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: '#fff',
+                            fontFamily: 'Poppins-SemiBold',
+                            fontSize: 16,
+                          }}>
+                          Yakan
+                        </Text>
+                        <Ionicons
+                          name="bookmark-outline"
+                          size={24}
+                          color="#fff"
+                        />
+                      </View>
+                      <View style={{height: 100, paddingHorizontal: 20}}>
+                        <ScrollView
+                          showsVerticalScrollIndicator={false}></ScrollView>
+                      </View>
+                      <View
+                        style={{
+                          height: 50,
+                          flexDirection: 'row',
+                          paddingHorizontal: 20,
+                          alignItems: 'center',
+                          justifyContent: 'flex-end',
+                        }}>
+                        <AntDesign name="sound" size={20} color="#fff" />
+                        <Feather
+                          style={{marginLeft: 20}}
+                          name="copy"
+                          size={20}
+                          color="#fff"
+                        />
+                      </View>
+                    </View> */}
+                  </>
+                )}
+              </View>
+            </>
+          )}
+        </ScrollView>
       </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
   options: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -270,6 +330,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    backgroundColor: '#fff',
+    elevation: 8,
   },
   image: {
     marginVertical: 15,

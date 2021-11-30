@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,20 +9,34 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {Searchbar} from 'react-native-paper';
+import {changeAppState} from '../features/appState';
+
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(changeAppState('updating'));
+    wait(2000).then(() => {
+      dispatch(changeAppState(''));
+      setRefreshing(false);
+    });
+  }, []);
+
   const {width, height} = Dimensions.get('window');
   const lesson = useSelector(state => state.lesson.value);
   const appState = useSelector(state => state.appState.value);
@@ -45,21 +59,27 @@ const Home = ({navigation}) => {
 
   return (
     <>
-      <StatusBar backgroundColor="#000" />
       <SafeAreaView style={styles.homeContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <StatusBar backgroundColor="#407BFF" />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              colors={['#407BFF']}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }>
           <LinearGradient
             colors={['#407BFF', '#40C6FF']}
-            start={{x: 0.0, y: 0.0}}
-            end={{x: 1.0, y: 0.0}}
             style={styles.headerBackground}>
             <Image
               style={{
                 position: 'absolute',
-                width: 160,
-                height: 160,
-                right: 15,
-                top: -55,
+                width: 150,
+                height: 150,
+                right: 55,
+                top: -25,
                 opacity: 0.85,
               }}
               source={require('../Assets/orange-triangle.png')}
@@ -98,7 +118,8 @@ const Home = ({navigation}) => {
               justifyContent: 'space-between',
               alignItems: 'center',
               paddingHorizontal: 20,
-              marginTop: 20,
+              paddingTop: 20,
+              backgroundColor: '#fff',
             }}>
             <Text
               style={{
@@ -125,7 +146,7 @@ const Home = ({navigation}) => {
 
             <View style={styles.categoryDivider}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ScanStack')}
+                onPress={() => navigation.navigate('Search')}
                 style={styles.IconContainer}>
                 <Ionicons name="heart" size={22} color="#407BFF" />
               </TouchableOpacity>
@@ -155,13 +176,6 @@ const Home = ({navigation}) => {
             </View>
           </View>
 
-          <View
-            style={{
-              height: 6,
-              width: '100%',
-              backgroundColor: '#dedede',
-            }}></View>
-
           <View style={{padding: 20}}>
             <View
               style={{
@@ -175,6 +189,7 @@ const Home = ({navigation}) => {
                   color: '#272727',
                   fontSize: 20,
                   fontFamily: 'Poppins-SemiBold',
+                  marginBottom: 10,
                 }}>
                 Lessons for you
               </Text>
@@ -197,14 +212,14 @@ const Home = ({navigation}) => {
                   key={key + e._id}
                   style={{
                     width: '100%',
-                    height: 90,
-                    backgroundColor: '#fff',
+                    height: 80,
+                    backgroundColor: '#f4f4f4',
                     flexDirection: 'row',
                     alignItems: 'center',
                     position: 'relative',
-                    marginBottom: 2,
-                    borderBottomWidth: key + 1 === lesson.length ? 0 : 1,
-                    borderBottomColor: 'lightgrey',
+                    marginBottom: 10,
+                    paddingLeft: 10,
+                    borderRadius: 10,
                   }}>
                   <Entypo
                     style={{position: 'absolute', right: 10}}
@@ -214,24 +229,39 @@ const Home = ({navigation}) => {
                   />
                   <View
                     style={{
-                      width: 50,
-                      height: 50,
+                      width: 55,
+                      height: 55,
                       borderRadius: 8,
                       marginRight: 20,
-                      elevation: 1,
-                      backgroundColor:
-                        key % 3 === 0
-                          ? '#628AE5'
-                          : key % 3 === 1
-                          ? '#C975E7'
-                          : '#EEB178',
+                      // elevation: 5,
+                      // backgroundColor:
+                      //   key % 3 === 0
+                      //     ? '#628AE5'
+                      //     : key % 3 === 1
+                      //     ? '#C975E7'
+                      //     : '#EEB178',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      overflow: 'hidden',
                     }}>
-                    <Image
-                      style={{width: '85%', height: '90%'}}
-                      source={require('../Assets/book.png')}
-                    />
+                    {e.icon ? (
+                      <Image
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          resizeMode: 'cover',
+                        }}
+                        source={{uri: e.icon}}
+                      />
+                    ) : (
+                      <Image
+                        style={{
+                          width: '85%',
+                          height: '90%',
+                        }}
+                        source={require('../Assets/book.png')}
+                      />
+                    )}
                   </View>
                   <View
                     style={{
@@ -246,27 +276,22 @@ const Home = ({navigation}) => {
                         fontSize: 16,
                         marginBottom: 5,
                       }}>
-                      {e.lessonTitle}
+                      {e.lessonTitle} {key}
                     </Text>
 
                     <View style={{flexDirection: 'row'}}>
                       <Text
                         style={{
-                          fontFamily: 'Poppins-Medium',
+                          fontFamily: 'Poppins-Regular',
                           color: '#55555C',
                           fontSize: 12,
                         }}>
-                        {e.chapters.length} Chapters •{' '}
+                        {e.chapters.length} Chapters |{' '}
                       </Text>
-                      <Ionicons
-                        style={{marginRight: 4}}
-                        name="timer-outline"
-                        size={15}
-                        color="#55555C"
-                      />
+
                       <Text
                         style={{
-                          fontFamily: 'Poppins-Medium',
+                          fontFamily: 'Poppins-Regular',
                           color: '#55555C',
                           fontSize: 12,
                         }}>

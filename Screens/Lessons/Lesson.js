@@ -7,11 +7,12 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import HeaderBack from '../../Shared/HeaderBack';
 import Axios from 'axios';
-import {useSelector, useDispatch} from 'react-redux';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useDispatch} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Lesson = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -31,103 +32,105 @@ const Lesson = ({navigation, route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: color}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <HeaderBack nav={navigation} background={color} color="#fff" />
-        <View
-          style={{
-            minHeight: 100,
-            marginBottom: 20,
-            paddingHorizontal: 20,
-            justifyContent: 'center',
-          }}>
-          <Text
+    <>
+      <StatusBar backgroundColor="#407BFF" />
+      <SafeAreaView style={{flex: 1, backgroundColor: '#407BFF'}}>
+        <HeaderBack nav={navigation} background="#407BFF" color="#fff" />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <LinearGradient
+            colors={['#407BFF', '#407BFF']}
             style={{
-              fontFamily: 'Poppins-SemiBold',
-              color: '#fff',
-              fontSize: 20,
+              minHeight: 100,
+              padding: 20,
+              justifyContent: 'center',
+              zIndex: 3,
+              backgroundColor: 'pink',
             }}>
-            {lesson.lessonTitle}
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'Poppins-Regular',
-              color: '#fff',
-              fontSize: 14,
-            }}>
-            {!lesson.description && 'No description available.'}
-          </Text>
+            <Text
+              style={{
+                fontFamily: 'Poppins-SemiBold',
+                color: '#fff',
+                fontSize: 20,
+                marginBottom: 10,
+              }}>
+              {lesson.lessonTitle}
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Regular',
+                color: '#fff',
+                fontSize: 14,
+              }}>
+              {!lesson.description ? '' : lesson.description}
+            </Text>
+            <View
+              style={{
+                width: 150,
+                height: 80,
+                position: 'absolute',
+                right: 20,
+                zIndex: -1,
+                opacity: 1,
+              }}></View>
+          </LinearGradient>
           <View
             style={{
-              width: 150,
-              height: 80,
-              position: 'absolute',
-              right: 20,
-              zIndex: -1,
-              opacity: 1,
+              backgroundColor: '#fff',
+              minHeight: height - 195,
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              padding: 20,
+              zIndex: 2,
             }}>
-            <Image
-              style={{width: '100%', height: '100%'}}
-              source={require('../../Assets/hands.png')}
-            />
+            {lesson.chapters.map((e, key) => {
+              return (
+                <TouchableOpacity
+                  key={e._id}
+                  onPress={() => {
+                    navigation.navigate('Chapter', {
+                      chapter: e,
+                      color: color,
+                      key: key + 1,
+                    });
+                  }}
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    backgroundColor: '#fff',
+                    paddingHorizontal: 10,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Regular',
+                      marginRight: 10,
+                      color: '#272727',
+                    }}>
+                    {key + 1}.
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-SemiBold',
+                      marginRight: 5,
+                      color: '#272727',
+                    }}>
+                    {e.title}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 13,
+                      color: '#55555C',
+                    }}></Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            minHeight: height - 195,
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            padding: 20,
-          }}>
-          {lesson.chapters.map((e, key) => {
-            return (
-              <TouchableOpacity
-                key={e._id}
-                onPress={() => {
-                  submitUpdate(e._id);
-                  navigation.navigate('Chapter', {chapter: e});
-                }}
-                style={{
-                  width: '100%',
-                  height: 75,
-                  marginBottom: 10,
-                  backgroundColor: '#fff',
-                  paddingHorizontal: 20,
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  // elevation: 1,
-                  borderWidth: 1,
-                  borderColor: '#d3d3d3',
-                }}>
-                <AntDesign
-                  style={{position: 'absolute', right: 20}}
-                  name="checkcircleo"
-                  size={18}
-                  color={e.complete === false ? '#bfbfbf' : '#00b300'}
-                />
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-SemiBold',
-                    marginBottom: -2,
-                    color: '#272727',
-                  }}>
-                  Chapter {key + 1}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Regular',
-                    fontSize: 13,
-                    color: '#55555C',
-                  }}>
-                  {e.title}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 

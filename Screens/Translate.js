@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,9 +12,19 @@ import HeaderBack from '../Shared/HeaderBack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useSelector} from 'react-redux';
+import * as Speech from 'expo-speech';
 
 const Translate = ({navigation}) => {
-  const [word, setWord] = useState(0);
+  const Vocabulary = useSelector(state => state.word.value);
+  const [word, setWord] = useState('');
+  const [translated, setTranslated] = useState('');
+
+  const textSpeech = s => {
+    Speech.speak(s);
+  };
+
   return (
     <>
       <StatusBar backgroundColor="#407BFF" />
@@ -26,36 +36,6 @@ const Translate = ({navigation}) => {
           background="#407BFF"
         />
         <ScrollView showsHorizontalScrollIndicator={false}>
-          {/* <View
-          style={{
-            height: 'auto',
-            backgroundColor: '#fff',
-            borderRadius: 10,
-            overflow: 'hidden',
-            marginBottom: 20,
-          }}>
-          <TextInput
-            maxLength={30}
-            multiline
-            onChangeText={text => setWord(text)}
-            right={
-              <TextInput.Affix
-                text={
-                  word.length === 0 || word.length === undefined
-                    ? '0/30'
-                    : word.length + '/30'
-                }
-              />
-            }
-            placeholder="Input text here"
-            multiline
-            style={{
-              elevation: 0,
-              backgroundColor: 'transparent',
-            }}
-          />
-        </View> */}
-
           <View
             style={{
               height: 'auto',
@@ -88,8 +68,27 @@ const Translate = ({navigation}) => {
               }}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TextInput
+                  value={word}
+                  onChangeText={ee => {
+                    setWord(ee);
+                    setTranslated(
+                      ee
+                        .split(' ')
+                        .map(
+                          word =>
+                            word &&
+                            Vocabulary.filter(
+                              e =>
+                                e.English === word.toLocaleLowerCase() ||
+                                e.English === word.toLocaleLowerCase() + 's' ||
+                                e.English + 's' === word.toLocaleLowerCase(),
+                            ).map(f => f.Yakan),
+                        )
+                        .join(' ')
+                        .replace(',', '/'),
+                    );
+                  }}
                   autoFocus={true}
-                  onChangeText={text => setWord(text)}
                   maxLength={30}
                   multiline={true}
                   placeholder="Input text here"
@@ -97,6 +96,7 @@ const Translate = ({navigation}) => {
                     fontFamily: 'Poppins-Regular',
                     color: '#272727',
                     height: 'auto',
+                    fontSize: 20,
                   }}
                 />
               </ScrollView>
@@ -131,60 +131,70 @@ const Translate = ({navigation}) => {
             </View>
           </View>
 
-          {/* <View style={{paddingHorizontal: 20}}>
-            <LinearGradient
-              colors={['#407BFF', '#40C6FF']}
-              start={{x: 0.0, y: 0.0}}
-              end={{x: 1.0, y: 0.0}}
-              style={{
-                height: 'auto',
-                borderRadius: 10,
-                overflow: 'hidden',
-                marginBottom: 20,
-              }}>
+          {translated.length === 0 ? null : (
+            <View style={{paddingHorizontal: 20}}>
               <View
                 style={{
-                  height: 50,
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
-                  paddingHorizontal: 20,
-                  alignItems: 'center',
+                  height: 'auto',
+                  borderRadius: 5,
+                  overflow: 'hidden',
+                  marginBottom: 20,
+                  backgroundColor: '#407BFF',
                 }}>
-                <Text
+                <View
                   style={{
-                    color: '#fff',
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 16,
+                    height: 50,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
+                    paddingHorizontal: 20,
+                    alignItems: 'center',
                   }}>
-                  Yakan
-                </Text>
-                <Ionicons name="bookmark-outline" size={24} color="#fff" />
-              </View>
-              <View style={{height: 100, paddingHorizontal: 20}}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                  <Text style={{fontFamily: 'Poppins-Regular', color: '#fff'}}>
-                    This is me
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontFamily: 'Poppins-SemiBold',
+                      fontSize: 16,
+                    }}>
+                    Yakan
                   </Text>
-                </ScrollView>
+                  <Ionicons name="bookmark-outline" size={24} color="#fff" />
+                </View>
+                <View style={{height: 100, paddingHorizontal: 20}}>
+                  <ScrollView showsVerticalScrollIndicator={false}>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Regular',
+                        color: '#fff',
+                        fontSize: 20,
+                      }}>
+                      {translated}
+                    </Text>
+                  </ScrollView>
+                </View>
+                <View
+                  style={{
+                    height: 50,
+                    flexDirection: 'row',
+                    paddingHorizontal: 20,
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                  }}>
+                  <AntDesign
+                    onPress={() => textSpeech(translated)}
+                    name="sound"
+                    size={20}
+                    color="#fff"
+                  />
+                  <Feather
+                    style={{marginLeft: 20}}
+                    name="copy"
+                    size={20}
+                    color="#fff"
+                  />
+                </View>
               </View>
-              <View
-                style={{
-                  height: 50,
-                  flexDirection: 'row',
-                  paddingHorizontal: 20,
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                }}>
-                <AntDesign name="sound" size={20} color="#fff" />
-                <Feather
-                  style={{marginLeft: 20}}
-                  name="copy"
-                  size={20}
-                  color="#fff"
-                />
-              </View>
-            </LinearGradient>
-          </View> */}
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
     </>

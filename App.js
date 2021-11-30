@@ -21,6 +21,7 @@ import Lesson from './Screens/Lessons/Lesson';
 import Chapter from './Screens/Lessons/Chapter';
 import {updateWord} from './features/words';
 import Splash from './Shared/Splash';
+import Favorites from './Screens/Favorites/Favorites';
 
 const Stack = createNativeStackNavigator();
 
@@ -132,6 +133,12 @@ function App() {
           options={{headerShown: false}}
           name="NotepadStack"
           component={NotepadStack}
+        />
+
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Search"
+          component={Favorites}
         />
       </Stack.Navigator>
     </NavigationContainer>
