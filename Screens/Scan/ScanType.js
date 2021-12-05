@@ -105,7 +105,7 @@ function ScanType({navigation}) {
 
   return (
     <>
-      <StatusBar backgroundColor="#fff" />
+      <StatusBar backgroundColor="#000" />
       <SafeAreaView
         style={{flex: 1, backgroundColor: imgSrc ? '#f4f4f4' : '#fff'}}>
         <View

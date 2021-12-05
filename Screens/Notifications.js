@@ -1,22 +1,29 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StatusBar, SafeAreaView, ScrollView} from 'react-native';
 
 const Notifications = () => {
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
-      <View
-        style={{height: 55, alignItems: 'center', justifyContent: 'center'}}>
-        <Text
+    <>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+        <View
           style={{
-            marginTop: 4,
-            color: '#272727',
-            fontFamily: 'Poppins-Medium',
-            fontSize: 18,
+            height: 55,
+            justifyContent: 'center',
+            paddingLeft: 20,
+            justifyContent: 'center',
           }}>
-          Notifications
-        </Text>
-      </View>
-    </View>
+          <Text
+            style={{
+              marginTop: 4,
+              color: '#272727',
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 20,
+            }}>
+            Notifications
+          </Text>
+        </View>
+      </SafeAreaView>
+    </>
   );
 };
 

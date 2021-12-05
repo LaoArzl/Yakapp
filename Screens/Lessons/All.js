@@ -100,13 +100,13 @@ const All = ({navigation}) => {
               overflow: 'hidden',
               marginBottom: 20,
             }}>
-            <ImageBackground
+            {/* <ImageBackground
               resizeMode="cover"
               style={{
                 height: '100%',
               }}
               source={require('../../Assets/BG/1.png')}
-            />
+            /> */}
             <View
               style={{
                 height: '35%',
@@ -156,13 +156,13 @@ const All = ({navigation}) => {
               overflow: 'hidden',
               marginBottom: 20,
             }}>
-            <ImageBackground
+            {/* <ImageBackground
               resizeMode="cover"
               style={{
                 height: '100%',
               }}
               source={require('../../Assets/BG/2.png')}
-            />
+            /> */}
             <View
               style={{
                 height: '35%',
@@ -211,13 +211,13 @@ const All = ({navigation}) => {
               overflow: 'hidden',
               marginBottom: 20,
             }}>
-            <ImageBackground
+            {/* <ImageBackground
               resizeMode="cover"
               style={{
                 height: '100%',
               }}
               source={require('../../Assets/BG/3.jpg')}
-            />
+            /> */}
             <View
               style={{
                 height: '35%',

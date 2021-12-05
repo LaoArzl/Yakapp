@@ -73,24 +73,24 @@ const TabNavScreen = () => {
           },
           headerShown: false,
         }}
-        name="Favorites"
+        name="Search"
         component={Search}
       />
       <Tab.Screen
         options={{
           tabBarIcon: ({color, focused}) => {
-            let iconName = 'user-alt';
+            let iconName = 'menu';
             return (
-              <FontAwesome5
+              <Ionicons
                 name={iconName}
-                size={focused ? 18 : 22}
+                size={focused ? 22 : 24}
                 color={color}
               />
             );
           },
           headerShown: false,
         }}
-        name="Profile"
+        name="More"
         component={Profile}
       />
     </Tab.Navigator>

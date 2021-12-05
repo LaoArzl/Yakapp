@@ -8,15 +8,29 @@ import {
   StatusBar,
 } from 'react-native';
 import {Searchbar} from 'react-native-paper';
-import Feather from 'react-native-vector-icons/Feather';
-import LinearGradient from 'react-native-linear-gradient';
 
 const Search = () => {
-  const [focus, setFocus] = useState(false);
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <ScrollView>
+          <View
+            style={{
+              width: '100%',
+              height: 55,
+              paddingLeft: 20,
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                marginTop: 4,
+                color: '#272727',
+                fontFamily: 'Poppins-SemiBold',
+                fontSize: 20,
+              }}>
+              Search
+            </Text>
+          </View>
           <View
             style={{
               paddingHorizontal: 20,
@@ -24,17 +38,7 @@ const Search = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            {focus && (
-              <TouchableOpacity
-                onPress={() => setFocus(false)}
-                style={{
-                  width: '10%',
-                  justifyContent: 'center',
-                }}>
-                <Feather name="chevron-left" size={26} color="#272727" />
-              </TouchableOpacity>
-            )}
-            <View style={{width: focus ? '89%' : '100%'}}>
+            <View style={{width: '100%'}}>
               <Searchbar
                 iconColor="#407BFF"
                 onFocus={() => setFocus(true)}
@@ -48,10 +52,10 @@ const Search = () => {
                 }}
                 style={{
                   elevation: 0,
-                  height: 35,
+                  height: 40,
                   backgroundColor: '#eee',
                   padding: 0,
-                  borderRadius: 4,
+                  borderRadius: 100,
                 }}
                 placeholder="Search and discover things"
               />

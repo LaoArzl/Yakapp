@@ -14,7 +14,6 @@ const HeaderBack = props => {
         borderBottomColor: '#d3d3d3',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: props.background ? props.background : '#fff',
       }}>
       <TouchableOpacity
@@ -27,8 +26,7 @@ const HeaderBack = props => {
           height: '100%',
           width: '10%',
           justifyContent: 'center',
-          position: 'absolute',
-          left: 20,
+          marginRight: 10,
         }}>
         <Ionicons
           name="arrow-back"

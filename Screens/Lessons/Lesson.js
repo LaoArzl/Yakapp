@@ -33,46 +33,32 @@ const Lesson = ({navigation, route}) => {
 
   return (
     <>
-      <StatusBar backgroundColor="#407BFF" />
       <SafeAreaView style={{flex: 1, backgroundColor: '#407BFF'}}>
-        <HeaderBack nav={navigation} background="#407BFF" color="#fff" />
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <LinearGradient
-            colors={['#407BFF', '#407BFF']}
+        <HeaderBack
+          nav={navigation}
+          color="#fff"
+          title={lesson.lessonTitle}
+          background="#407BFF"
+        />
+        <LinearGradient
+          colors={['#407BFF', '#407BFF']}
+          style={{
+            minHeight: 100,
+            padding: 20,
+            justifyContent: 'center',
+            zIndex: 3,
+            backgroundColor: 'pink',
+          }}>
+          <Text
             style={{
-              minHeight: 100,
-              padding: 20,
-              justifyContent: 'center',
-              zIndex: 3,
-              backgroundColor: 'pink',
+              fontFamily: 'Poppins-Regular',
+              color: '#fff',
+              fontSize: 14,
             }}>
-            <Text
-              style={{
-                fontFamily: 'Poppins-SemiBold',
-                color: '#fff',
-                fontSize: 20,
-                marginBottom: 10,
-              }}>
-              {lesson.lessonTitle}
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                color: '#fff',
-                fontSize: 14,
-              }}>
-              {!lesson.description ? '' : lesson.description}
-            </Text>
-            <View
-              style={{
-                width: 150,
-                height: 80,
-                position: 'absolute',
-                right: 20,
-                zIndex: -1,
-                opacity: 1,
-              }}></View>
-          </LinearGradient>
+            {!lesson.description ? '' : lesson.description}
+          </Text>
+        </LinearGradient>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
               backgroundColor: '#fff',
@@ -96,7 +82,6 @@ const Lesson = ({navigation, route}) => {
                   style={{
                     width: '100%',
                     height: 50,
-                    backgroundColor: '#fff',
                     paddingHorizontal: 10,
                     alignItems: 'center',
                     flexDirection: 'row',

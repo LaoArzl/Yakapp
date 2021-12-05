@@ -137,7 +137,7 @@ function App() {
 
         <Stack.Screen
           options={{headerShown: false}}
-          name="Search"
+          name="Favorites"
           component={Favorites}
         />
       </Stack.Navigator>

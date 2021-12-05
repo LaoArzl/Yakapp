@@ -16,6 +16,36 @@ const Create = ({navigation}) => {
   const [body, setBody] = useState('');
   const [now, setNow] = useState('');
 
+  let date = new Date();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM ' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  let dateNow =
+    monthNames[date.getMonth()] +
+    ' ' +
+    date.getDate() +
+    ', ' +
+    date.getFullYear();
   const mergeUsers = async () => {
     try {
       //save first user
@@ -23,20 +53,26 @@ const Create = ({navigation}) => {
 
       await AsyncStorage.mergeItem('note', JSON.stringify({title, body}));
     } catch (e) {}
-
-    console.log('ok');
   };
   return (
     <>
       <StatusBar backgroundColor="#fff" />
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <HeaderBack
+          title="Create Note"
           nav={navigation}
           backgroundColor="#fff"
-          title="Create Note"
         />
         <ScrollView>
-          <View style={{paddingHorizontal: 20}}>
+          <View style={{padding: 20}}>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Regular',
+                color: 'grey',
+                fontSize: 12,
+              }}>
+              {strTime + ', ' + dateNow}
+            </Text>
             <TextInput
               onChangeText={text => setTitle(text)}
               value={title}

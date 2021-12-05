@@ -4,7 +4,11 @@ import NotLogin from './NotLogin';
 
 const Profile = ({navigation}) => {
   const [isLogin, setIsLogin] = useState(false);
-  return <>{isLogin ? null : <NotLogin nav={navigation} />}</>;
+  return (
+    <>
+      <Text>Hello</Text>
+    </>
+  );
 };
 
 export default Profile;

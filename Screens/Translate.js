@@ -27,14 +27,8 @@ const Translate = ({navigation}) => {
 
   return (
     <>
-      <StatusBar backgroundColor="#407BFF" />
       <SafeAreaView style={{backgroundColor: '#F4F4F4', flex: 1}}>
-        <HeaderBack
-          nav={navigation}
-          title="Translate"
-          color="#fff"
-          background="#407BFF"
-        />
+        <HeaderBack nav={navigation} title="Translate" background="#fff" />
         <ScrollView showsHorizontalScrollIndicator={false}>
           <View
             style={{

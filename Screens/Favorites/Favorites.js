@@ -6,12 +6,7 @@ const Favorites = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-        <HeaderBack
-          nav={navigation}
-          title="Favorites"
-          color="#fff"
-          background="#407BFF"
-        />
+        <HeaderBack nav={navigation} title="Favorites" background="#fff" />
         <ScrollView></ScrollView>
       </SafeAreaView>
     </>

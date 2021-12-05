@@ -60,7 +60,7 @@ const Home = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={styles.homeContainer}>
-        <StatusBar backgroundColor="#407BFF" />
+        <StatusBar backgroundColor="#000" />
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
@@ -146,7 +146,7 @@ const Home = ({navigation}) => {
 
             <View style={styles.categoryDivider}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Search')}
+                onPress={() => navigation.navigate('Favorites')}
                 style={styles.IconContainer}>
                 <Ionicons name="heart" size={22} color="#407BFF" />
               </TouchableOpacity>
@@ -168,7 +168,7 @@ const Home = ({navigation}) => {
                 style={styles.IconContainer}>
                 <MaterialCommunityIcons
                   name="google-translate"
-                  size={20}
+                  size={22}
                   color="#407BFF"
                 />
               </TouchableOpacity>
@@ -195,113 +195,106 @@ const Home = ({navigation}) => {
               </Text>
             </View>
 
-            {lesson.map((e, key) => {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('Lesson', {
-                      lesson: e,
-                      color:
-                        key % 3 === 0
-                          ? '#628AE5'
-                          : key % 3 === 1
-                          ? '#C975E7'
-                          : '#EEB178',
-                    })
-                  }
-                  key={key + e._id}
-                  style={{
-                    width: '100%',
-                    height: 80,
-                    backgroundColor: '#f4f4f4',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    position: 'relative',
-                    marginBottom: 10,
-                    paddingLeft: 10,
-                    borderRadius: 10,
-                  }}>
-                  <Entypo
-                    style={{position: 'absolute', right: 10}}
-                    name="chevron-small-right"
-                    size={24}
-                    color="#272727"
-                  />
-                  <View
+            <View
+              style={{
+                elevation: 4,
+                paddingLeft: 20,
+                borderRadius: 20,
+                overflow: 'hidden',
+                backgroundColor: '#fff',
+              }}>
+              {lesson.map((e, key) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Lesson', {
+                        lesson: e,
+                        color:
+                          key % 3 === 0
+                            ? '#628AE5'
+                            : key % 3 === 1
+                            ? '#C975E7'
+                            : '#EEB178',
+                      })
+                    }
+                    key={key + e._id}
                     style={{
-                      width: 55,
-                      height: 55,
-                      borderRadius: 8,
-                      marginRight: 20,
-                      // elevation: 5,
-                      // backgroundColor:
-                      //   key % 3 === 0
-                      //     ? '#628AE5'
-                      //     : key % 3 === 1
-                      //     ? '#C975E7'
-                      //     : '#EEB178',
+                      width: '100%',
+                      height: 90,
+                      backgroundColor: '#fff',
+                      marginBottom: key + 1 === lesson.length ? 0 : 4,
+                      flexDirection: 'row',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      overflow: 'hidden',
+                      position: 'relative',
                     }}>
-                    {e.icon ? (
-                      <Image
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          resizeMode: 'cover',
-                        }}
-                        source={{uri: e.icon}}
-                      />
-                    ) : (
-                      <Image
-                        style={{
-                          width: '85%',
-                          height: '90%',
-                        }}
-                        source={require('../Assets/book.png')}
-                      />
-                    )}
-                  </View>
-                  <View
-                    style={{
-                      width: width - 120,
-                      height: '100%',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
+                    <Entypo
+                      style={{position: 'absolute', right: 10}}
+                      name="chevron-small-right"
+                      size={24}
+                      color="#272727"
+                    />
+                    <View
                       style={{
-                        fontFamily: 'Poppins-SemiBold',
-                        color: '#272727',
-                        fontSize: 16,
-                        marginBottom: 5,
+                        width: 55,
+                        height: 55,
+                        borderRadius: 15,
+                        marginRight: 20,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        backgroundColor: '#eee',
                       }}>
-                      {e.lessonTitle} {key}
-                    </Text>
-
-                    <View style={{flexDirection: 'row'}}>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Regular',
-                          color: '#55555C',
-                          fontSize: 12,
-                        }}>
-                        {e.chapters.length} Chapters |{' '}
-                      </Text>
-
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-Regular',
-                          color: '#55555C',
-                          fontSize: 12,
-                        }}>
-                        {e.chapters.length * 2} mins
-                      </Text>
+                      {e.icon ? (
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            resizeMode: 'cover',
+                          }}
+                          source={{uri: e.icon}}
+                        />
+                      ) : (
+                        <Image
+                          style={{
+                            width: '85%',
+                            height: '90%',
+                          }}
+                          source={require('../Assets/book.png')}
+                        />
+                      )}
                     </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
+                    <View
+                      style={{
+                        width: width - 120,
+                        height: '100%',
+                        justifyContent: 'center',
+                        borderBottomWidth: key + 1 === lesson.length ? 0 : 1,
+                        borderBottomColor: '#dedede',
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-SemiBold',
+                          color: '#272727',
+                          fontSize: 16,
+                        }}>
+                        {e.lessonTitle}
+                      </Text>
+
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins-Regular',
+                            color: '#272727',
+                            fontSize: 12,
+                          }}>
+                          {e.chapters.length} Chapters
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -313,7 +306,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   homeContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FBFBFC',
     flex: 1,
   },
   headerText: {

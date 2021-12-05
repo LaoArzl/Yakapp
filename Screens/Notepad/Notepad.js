@@ -11,6 +11,7 @@ import HeaderBack from '../../Shared/HeaderBack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Searchbar} from 'react-native-paper';
 
 const Notepad = ({navigation}) => {
   const [data, setData] = useState([]);
@@ -34,95 +35,29 @@ const Notepad = ({navigation}) => {
   }, []);
   return (
     <>
-      <StatusBar backgroundColor="#407BFF" />
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-        <HeaderBack
-          nav={navigation}
-          title="Notes"
-          background="#407BFF"
-          color="#fff"
-        />
-        <ScrollView>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Content')}
+        <HeaderBack nav={navigation} title="Notes" background="#fff" />
+        <ScrollView style={{padding: 20, paddingVertical: 10}}>
+          <Searchbar
+            iconColor="#407BFF"
+            autoFocus={true}
+            placeholder="Search Notes"
+            inputStyle={{
+              fontFamily: 'Poppins-Regular',
+              fontSize: 14,
+              color: '#272727',
+              paddingBottom: 5,
+              paddingLeft: 0,
+            }}
             style={{
+              height: 40,
               width: '100%',
-              height: 60,
-              paddingHorizontal: 20,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                borderRightWidth: 1,
-                borderRightColor: '#d3d3d3',
-                width: '13%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minWidth: 38,
-              }}>
-              <MaterialIcons
-                style={{position: 'absolute', right: -6}}
-                name="circle"
-                size={10}
-                color="#407BFF"
-              />
-              <Text style={{fontSize: 10, fontFamily: 'Popppins-Regular'}}>
-                3/21
-              </Text>
-            </View>
-            <View
-              style={{
-                width: '82%',
-                //   borderBottomWidth: 0.5,
-                //   borderRightColor: '#d3d3d3',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontFamily: 'Poppins-Medium', color: '#272727'}}>
-                sds
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              width: '100%',
-              height: 60,
-              paddingHorizontal: 20,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View
-              style={{
-                borderRightWidth: 1,
-                borderRightColor: '#d3d3d3',
-                width: '13%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minWidth: 38,
-              }}>
-              <MaterialIcons
-                style={{position: 'absolute', right: -6}}
-                name="circle"
-                size={10}
-                color="#407BFF"
-              />
-              <Text style={{fontSize: 10, fontFamily: 'Popppins-Regular'}}>
-                3/21
-              </Text>
-            </View>
-            <View
-              style={{
-                width: '82%',
-                //   borderBottomWidth: 0.5,
-                //   borderRightColor: '#d3d3d3',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontFamily: 'Poppins-Medium', color: '#272727'}}>
-                Entry number 2
-              </Text>
-            </View>
-          </TouchableOpacity>
+              borderWidth: 0,
+              borderRadius: 100,
+              elevation: 0,
+              backgroundColor: '#f4f4f4',
+            }}
+          />
         </ScrollView>
         <TouchableOpacity
           onPress={() => navigation.navigate('Create')}

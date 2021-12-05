@@ -15,9 +15,8 @@ const Chapter = ({navigation, route}) => {
   const {chapter, color, key} = route.params;
   return (
     <>
-      <StatusBar backgroundColor="#fff" />
-      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-        <HeaderBack title={chapter.title} nav={navigation} border />
+      <SafeAreaView style={{flex: 1, backgroundColor: '#f4f4f4'}}>
+        <HeaderBack nav={navigation} border />
         <ScrollView>
           {chapter.header && (
             <View style={styles.imageContainer}>
