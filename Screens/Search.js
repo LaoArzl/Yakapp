@@ -41,8 +41,6 @@ const Search = () => {
             <View style={{width: '100%'}}>
               <Searchbar
                 iconColor="#407BFF"
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
                 inputStyle={{
                   fontFamily: 'Poppins-Regular',
                   fontSize: 14,

@@ -15,6 +15,8 @@ import {Searchbar} from 'react-native-paper';
 
 const Notepad = ({navigation}) => {
   const [data, setData] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [state, setState] = useState('');
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('note');
@@ -23,21 +25,32 @@ const Notepad = ({navigation}) => {
       // error reading value
     }
   };
+
+  const findNotes = async () => {
+    const result = await AsyncStorage.getItem('notes');
+    if (result !== null) {
+      setNotes(JSON.parse(result));
+    }
+  };
+
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch (e) {
+      // clear error
+    }
+
+    console.log('Done.');
+  };
+
   useEffect(() => {
-    AsyncStorage.getAllKeys((err, keys) => {
-      AsyncStorage.multiGet(keys, (error, stores) => {
-        stores.map((result, i, store) => {
-          console.log({[store[i][0]]: store[i][1]});
-          return true;
-        });
-      });
-    });
-  }, []);
+    findNotes();
+  }, [state]);
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <HeaderBack nav={navigation} title="Notes" background="#fff" />
-        <ScrollView style={{padding: 20, paddingVertical: 10}}>
+        <View style={{paddingHorizontal: 20, paddingBottom: 10}}>
           <Searchbar
             iconColor="#407BFF"
             autoFocus={true}
@@ -58,9 +71,56 @@ const Notepad = ({navigation}) => {
               backgroundColor: '#f4f4f4',
             }}
           />
+        </View>
+        <ScrollView
+          style={{
+            padding: 20,
+            paddingVertical: 10,
+            backgroundColor: '#fff',
+          }}>
+          <View>
+            {notes.map(e => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#fff',
+                    paddingVertical: 10,
+                    borderRadius: 10,
+                    marginBottom: 2,
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#dedede',
+                  }}
+                  key={e.id}>
+                  <Text
+                    style={{fontFamily: 'Poppins-SemiBold', color: '#272727'}}>
+                    {e.title ? e.title : e.body.split(' ')[0]}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontFamily: 'Poppins-Regular',
+                      color: '#272727',
+                      marginBottom: 15,
+                    }}>
+                    {e.body}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 12,
+                    }}>
+                    {e.time}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </ScrollView>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Create')}
+          // onPress={() => clearAll()}
+          onPress={() =>
+            navigation.navigate('Create', {notes, setNotes, setState})
+          }
           style={{
             width: 50,
             height: 50,

@@ -6,12 +6,14 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
-import HeaderBack from '../../Shared/HeaderBack';
-import {TextInput} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
-const Create = ({navigation}) => {
+const Create = ({navigation, route}) => {
+  const {notes, setNotes, setState} = route.params;
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [now, setNow] = useState('');
@@ -46,23 +48,57 @@ const Create = ({navigation}) => {
     date.getDate() +
     ', ' +
     date.getFullYear();
-  const mergeUsers = async () => {
-    try {
-      //save first user
-      await AsyncStorage.mergeItem('note', JSON.stringify({title, body}));
 
-      await AsyncStorage.mergeItem('note', JSON.stringify({title, body}));
-    } catch (e) {}
+  const handleSubmit = async () => {
+    const note = {id: Date.now(), title, body, time: strTime + ' ' + dateNow};
+    const updatedNotes = [...notes, note];
+    setNotes(updatedNotes);
+    setState('Updating....');
+    setTimeout(() => setState(''), 1000);
+    await AsyncStorage.setItem('notes', JSON.stringify(updatedNotes));
+    setTimeout(() => navigation.navigate('NotepadStack'), 500);
   };
+
   return (
     <>
-      <StatusBar backgroundColor="#fff" />
+      <StatusBar backgroundColor="#000" />
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-        <HeaderBack
-          title="Create Note"
-          nav={navigation}
-          backgroundColor="#fff"
-        />
+        <View
+          style={{
+            height: 55,
+            paddingHorizontal: 20,
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#fff',
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+              height: '100%',
+              width: '10%',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              marginRight: 10,
+            }}>
+            <Ionicons name="arrow-back" size={26} color="#407BFF" />
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontFamily: 'Poppins-Medium',
+              fontSize: 18,
+              color: '#272727',
+              marginTop: 4,
+            }}>
+            Create Note
+          </Text>
+          {body !== '' && (
+            <TouchableOpacity
+              onPress={() => handleSubmit()}
+              style={{position: 'absolute', right: 20}}>
+              <Feather name="check" size={24} color="#272727" />
+            </TouchableOpacity>
+          )}
+        </View>
         <ScrollView>
           <View style={{padding: 20}}>
             <Text
@@ -70,33 +106,34 @@ const Create = ({navigation}) => {
                 fontFamily: 'Poppins-Regular',
                 color: 'grey',
                 fontSize: 12,
+                marginBottom: 20,
               }}>
-              {strTime + ', ' + dateNow}
+              {strTime + ' ' + dateNow}
             </Text>
             <TextInput
               onChangeText={text => setTitle(text)}
               value={title}
-              mode="outlined"
-              outlineColor="#d3d3d3"
               style={{
-                backgroundColor: '#f8f8f8',
-                marginBottom: 15,
+                backgroundColor: '#fff',
+                fontSize: 20,
+                fontFamily: 'Poppins-SemiBold',
               }}
-              label="Title"
+              placeholder="Title"
+              placeholderTextColor="#272727"
             />
 
             <TextInput
               onChangeText={text => setBody(text)}
               value={body}
-              label="Body"
-              mode="outlined"
+              placeholder="Note something down"
+              placeholderTextColor="#272727"
               multiline={true}
-              numberOfLines={15}
-              outlineColor="#d3d3d3"
+              textAlignVertical="top"
+              numberOfLines={20}
               style={{
-                backgroundColor: '#f8f8f8',
+                backgroundColor: '#fff',
                 marginBottom: 20,
-                padding: 0,
+                fontFamily: 'Poppins-Regular',
               }}
             />
           </View>
@@ -106,27 +143,7 @@ const Create = ({navigation}) => {
               height: 'auto',
               width: '100%',
               paddingHorizontal: 20,
-            }}>
-            <TouchableOpacity
-              onPress={() => mergeUsers()}
-              style={{
-                backgroundColor: '#407BFF',
-                height: 45,
-                width: '100%',
-                borderRadius: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Semibold',
-                  color: '#fff',
-                  fontSize: 16,
-                }}>
-                Save
-              </Text>
-            </TouchableOpacity>
-          </View>
+            }}></View>
         </ScrollView>
       </SafeAreaView>
     </>

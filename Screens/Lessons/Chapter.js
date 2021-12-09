@@ -49,7 +49,7 @@ const Chapter = ({navigation, route}) => {
                 fontFamily: 'Poppins-Regular',
                 color: '#272727',
                 fontSize: 16,
-                textAlign: 'justify',
+                textAlign: 'left',
               }}>
               {chapter.content}
             </Text>
