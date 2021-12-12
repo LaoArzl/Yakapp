@@ -17,6 +17,7 @@ const Create = ({navigation, route}) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [now, setNow] = useState('');
+  const [save, setSave] = useState(false);
 
   let date = new Date();
   var hours = date.getHours();
@@ -56,7 +57,8 @@ const Create = ({navigation, route}) => {
     setState('Updating....');
     setTimeout(() => setState(''), 1000);
     await AsyncStorage.setItem('notes', JSON.stringify(updatedNotes));
-    setTimeout(() => navigation.navigate('NotepadStack'), 500);
+    setSave(true);
+    setTimeout(() => setSave(false), 5000);
   };
 
   return (
@@ -137,14 +139,42 @@ const Create = ({navigation, route}) => {
               }}
             />
           </View>
-
+        </ScrollView>
+        {save && (
           <View
             style={{
-              height: 'auto',
-              width: '100%',
               paddingHorizontal: 20,
-            }}></View>
-        </ScrollView>
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 20,
+              width: '100%',
+            }}>
+            <View
+              style={{
+                width: '100%',
+                height: 45,
+                backgroundColor: '#323232',
+                borderRadius: 5,
+                paddingHorizontal: 20,
+                alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Text style={{color: '#eee', fontFamily: 'Poppins-Regular'}}>
+                Note saved.
+              </Text>
+              <Text
+                onPress={() => setSave(false)}
+                style={{
+                  color: '#407BFF',
+                  fontFamily: 'Poppins-Medium',
+                }}>
+                CLOSE
+              </Text>
+            </View>
+          </View>
+        )}
       </SafeAreaView>
     </>
   );

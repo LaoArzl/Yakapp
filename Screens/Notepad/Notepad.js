@@ -17,6 +17,8 @@ const Notepad = ({navigation}) => {
   const [data, setData] = useState([]);
   const [notes, setNotes] = useState([]);
   const [state, setState] = useState('');
+  const [query, setQuery] = useState('');
+  const [text, setText] = useState();
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('note');
@@ -33,25 +35,34 @@ const Notepad = ({navigation}) => {
     }
   };
 
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // clear error
-    }
-
-    console.log('Done.');
-  };
-
   useEffect(() => {
     findNotes();
   }, [state]);
+
+  const handleSearchInput = text => {
+    setQuery(text);
+
+    if (!text.trim()) {
+      setQuery('');
+      findNotes();
+    }
+    const filteredNotes = notes.filter(e => {
+      if (e.title.toLowerCase().includes(text.toLowerCase())) {
+        return e;
+      }
+    });
+
+    if (filteredNotes) {
+      setNotes([...filteredNotes]);
+    }
+  };
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <HeaderBack nav={navigation} title="Notes" background="#fff" />
         <View style={{paddingHorizontal: 20, paddingBottom: 10}}>
           <Searchbar
+            onChangeText={text => handleSearchInput(text)}
             iconColor="#407BFF"
             autoFocus={true}
             placeholder="Search Notes"
@@ -82,6 +93,13 @@ const Notepad = ({navigation}) => {
             {notes.map(e => {
               return (
                 <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Content', {
+                      content: e,
+                      setNotes,
+                      setState,
+                    })
+                  }
                   style={{
                     backgroundColor: '#fff',
                     paddingVertical: 10,
@@ -92,11 +110,12 @@ const Notepad = ({navigation}) => {
                   }}
                   key={e.id}>
                   <Text
+                    numberOfLines={1}
                     style={{fontFamily: 'Poppins-SemiBold', color: '#272727'}}>
                     {e.title ? e.title : e.body.split(' ')[0]}
                   </Text>
                   <Text
-                    numberOfLines={1}
+                    numberOfLines={2}
                     style={{
                       fontFamily: 'Poppins-Regular',
                       color: '#272727',

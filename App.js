@@ -49,7 +49,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    Axios.get('http://10.0.2.2:3001/add-lesson')
+    Axios.get('https://yakapp.herokuapp.com/add-lesson')
       .then(response => {
         dispatch(updateLesson(response.data));
       })
@@ -57,7 +57,7 @@ function App() {
   }, [appState]);
 
   useEffect(() => {
-    Axios.get('http://10.0.2.2:3001/words')
+    Axios.get('https://yakapp.herokuapp.com/words')
       .then(response => {
         dispatch(updateWord(response.data));
       })
