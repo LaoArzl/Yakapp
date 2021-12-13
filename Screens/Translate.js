@@ -155,7 +155,7 @@ const Translate = ({navigation}) => {
                 justifyContent: 'flex-end',
                 flexDirection: 'row',
               }}>
-              <TouchableOpacity onPress={() => navigation.navigate('ScanType')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Scan')}>
                 <FontAwesome name="camera" size={20} color="#407BFF" />
               </TouchableOpacity>
               <TouchableOpacity

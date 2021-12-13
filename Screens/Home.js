@@ -10,6 +10,7 @@ import {
   FlatList,
   Dimensions,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -60,7 +61,7 @@ const Home = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={styles.homeContainer}>
-        <StatusBar backgroundColor="#000" />
+        <StatusBar backgroundColor="#407BFF" />
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
@@ -203,97 +204,107 @@ const Home = ({navigation}) => {
                 overflow: 'hidden',
                 backgroundColor: '#fff',
               }}>
-              {lesson.map((e, key) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('Lesson', {
-                        lesson: e,
-                        color:
-                          key % 3 === 0
-                            ? '#628AE5'
-                            : key % 3 === 1
-                            ? '#C975E7'
-                            : '#EEB178',
-                      })
-                    }
-                    key={key + e._id}
-                    style={{
-                      width: '100%',
-                      height: 90,
-                      backgroundColor: '#fff',
-                      marginBottom: key + 1 === lesson.length ? 0 : 4,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      position: 'relative',
-                    }}>
-                    <Entypo
-                      style={{position: 'absolute', right: 10}}
-                      name="chevron-small-right"
-                      size={24}
-                      color="#272727"
-                    />
-                    <View
-                      style={{
-                        width: 55,
-                        height: 55,
-                        borderRadius: 15,
-                        marginRight: 20,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        overflow: 'hidden',
-                        backgroundColor: '#eee',
-                      }}>
-                      {e.icon ? (
-                        <Image
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            resizeMode: 'cover',
-                          }}
-                          source={{uri: e.icon}}
-                        />
-                      ) : (
-                        <Image
-                          style={{
-                            width: '85%',
-                            height: '90%',
-                          }}
-                          source={require('../Assets/book.png')}
-                        />
-                      )}
-                    </View>
-                    <View
-                      style={{
-                        width: width - 120,
-                        height: '100%',
-                        justifyContent: 'center',
-                        borderBottomWidth: key + 1 === lesson.length ? 0 : 1,
-                        borderBottomColor: '#dedede',
-                      }}>
-                      <Text
+              {!lesson ||
+              lesson === null ||
+              lesson === undefined ||
+              lesson.length === 0 ? (
+                <ActivityIndicator size="small" color="red" />
+              ) : (
+                <>
+                  {lesson.map((e, key) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('Lesson', {
+                            lesson: e,
+                            color:
+                              key % 3 === 0
+                                ? '#628AE5'
+                                : key % 3 === 1
+                                ? '#C975E7'
+                                : '#EEB178',
+                          })
+                        }
+                        key={key + e._id}
                         style={{
-                          fontFamily: 'Poppins-SemiBold',
-                          color: '#272727',
-                          fontSize: 16,
+                          width: '100%',
+                          height: 90,
+                          backgroundColor: '#fff',
+                          marginBottom: key + 1 === lesson.length ? 0 : 4,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          position: 'relative',
                         }}>
-                        {e.lessonTitle}
-                      </Text>
-
-                      <View style={{flexDirection: 'row'}}>
-                        <Text
+                        <Entypo
+                          style={{position: 'absolute', right: 10}}
+                          name="chevron-small-right"
+                          size={24}
+                          color="#272727"
+                        />
+                        <View
                           style={{
-                            fontFamily: 'Poppins-Regular',
-                            color: '#272727',
-                            fontSize: 12,
+                            width: 55,
+                            height: 55,
+                            borderRadius: 15,
+                            marginRight: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            overflow: 'hidden',
+                            backgroundColor: '#eee',
                           }}>
-                          {e.chapters.length} Chapters
-                        </Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
+                          {e.icon ? (
+                            <Image
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                resizeMode: 'cover',
+                              }}
+                              source={{uri: e.icon}}
+                            />
+                          ) : (
+                            <Image
+                              style={{
+                                width: '85%',
+                                height: '90%',
+                              }}
+                              source={require('../Assets/book.png')}
+                            />
+                          )}
+                        </View>
+                        <View
+                          style={{
+                            width: width - 120,
+                            height: '100%',
+                            justifyContent: 'center',
+                            borderBottomWidth:
+                              key + 1 === lesson.length ? 0 : 1,
+                            borderBottomColor: '#dedede',
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: 'Poppins-SemiBold',
+                              color: '#272727',
+                              fontSize: 16,
+                            }}>
+                            {e.lessonTitle}
+                          </Text>
+
+                          <View style={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                fontFamily: 'Poppins-Regular',
+                                color: '#272727',
+                                fontSize: 12,
+                              }}>
+                              {e.chapters.length} Chapters
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </>
+              )}
             </View>
           </View>
         </ScrollView>

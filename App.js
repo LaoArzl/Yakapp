@@ -15,6 +15,8 @@ import Axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {updateLesson} from './features/lessons';
 import NotepadStack from './Routes/NotepadStack';
+import Scan from './Screens/Scan/Scan';
+import ScanType from './Screens/Scan/ScanType';
 
 import OnBoardingScreen from './Shared/OnBoardingScreen';
 import Lesson from './Screens/Lessons/Lesson';
@@ -105,8 +107,8 @@ function App() {
         />
         <Stack.Screen
           options={{headerShown: false}}
-          name="ScanStack"
-          component={ScanStack}
+          name="Scan"
+          component={Scan}
         />
         <Stack.Screen
           options={{headerShown: false}}

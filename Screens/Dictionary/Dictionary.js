@@ -62,6 +62,7 @@ const Dictionary = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#f4f4f4'}}>
+        <StatusBar backgroundColor="#000" />
         {on && (
           <View
             style={{

@@ -15,9 +15,6 @@ import TesseractOcr, {
   LANG_ENGLISH,
   useEventListener,
 } from 'react-native-tesseract-ocr';
-import HeaderBack from '../../Shared/HeaderBack';
-import {Button} from 'react-native-paper';
-import {Vocabulary} from '../Dictionary/Vocabulary';
 import {useSelector} from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
@@ -44,8 +41,6 @@ function ScanType({navigation}) {
   });
 
   const recognizeTextFromImage = async path => {
-    setIsLoading(true);
-
     try {
       const tesseractOptions = {};
       const recognizedText = await TesseractOcr.recognize(
@@ -53,6 +48,7 @@ function ScanType({navigation}) {
         LANG_ENGLISH,
         tesseractOptions,
       );
+
       setText(recognizedText);
       setTranslated(
         recognizedText
