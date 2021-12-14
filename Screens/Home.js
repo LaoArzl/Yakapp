@@ -61,7 +61,7 @@ const Home = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={styles.homeContainer}>
-        <StatusBar backgroundColor="#407BFF" />
+        <StatusBar backgroundColor="#000" />
         <ScrollView
           showsVerticalScrollIndicator={false}
           refreshControl={
@@ -317,7 +317,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   homeContainer: {
-    backgroundColor: '#FBFBFC',
+    backgroundColor: '#fff',
     flex: 1,
   },
   headerText: {

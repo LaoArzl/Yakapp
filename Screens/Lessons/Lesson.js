@@ -33,35 +33,30 @@ const Lesson = ({navigation, route}) => {
 
   return (
     <>
-      <SafeAreaView style={{flex: 1, backgroundColor: '#407BFF'}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
         <HeaderBack
           nav={navigation}
-          color="#fff"
           title={lesson.lessonTitle}
-          background="#407BFF"
+          background="#fff"
         />
-        <LinearGradient
-          colors={['#407BFF', '#407BFF']}
+        <View
           style={{
             minHeight: 100,
             padding: 20,
             justifyContent: 'center',
             zIndex: 3,
-            backgroundColor: 'pink',
           }}>
           <Text
             style={{
               fontFamily: 'Poppins-Regular',
               color: '#fff',
               fontSize: 14,
-            }}>
-            {!lesson.description ? '' : lesson.description}
-          </Text>
-        </LinearGradient>
+            }}></Text>
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: '#eee',
               minHeight: height - 195,
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,

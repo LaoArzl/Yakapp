@@ -16,9 +16,10 @@ const Chapter = ({navigation, route}) => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#f4f4f4'}}>
-        <HeaderBack nav={navigation} border />
+        <StatusBar backgroundColor="#000" />
+        <HeaderBack nav={navigation} border title={'Chapter ' + key} />
         <ScrollView>
-          {chapter.header && (
+          {chapter.header ? (
             <View style={styles.imageContainer}>
               <View style={styles.imageContainerAfter}></View>
               <View
@@ -32,8 +33,8 @@ const Chapter = ({navigation, route}) => {
                   borderLeftWidth: 2,
                   borderLeftColor: '#40C6FF',
                 }}>
-                <Text style={styles.chapterTitleText}>Chapter {key}</Text>
-                <Text style={styles.chaptersubtitleText}>{chapter.title}</Text>
+                {/* <Text style={styles.chapterTitleText}>Chapter {key}</Text> */}
+                <Text style={styles.chapterTitleText}>{chapter.title}</Text>
               </View>
               <Image
                 style={styles.imageHeader}
@@ -42,7 +43,7 @@ const Chapter = ({navigation, route}) => {
                 }}
               />
             </View>
-          )}
+          ) : null}
           <View style={styles.textContainer}>
             <Text
               style={{
@@ -53,8 +54,17 @@ const Chapter = ({navigation, route}) => {
               }}>
               {chapter.content}
             </Text>
-            {chapter.reference && (
-              <View style={{height: 'auto', marginBottom: 40}}>
+
+            {chapter.reference ? (
+              <View
+                style={{
+                  height: 'auto',
+                  marginBottom: 40,
+                  marginTop: 20,
+                  borderTopWidth: 1,
+                  paddingTop: 10,
+                  borderTopColor: '#d3d3d3',
+                }}>
                 <Text
                   style={{
                     color: '#272727',
@@ -70,7 +80,7 @@ const Chapter = ({navigation, route}) => {
                   {chapter.reference}
                 </Text>
               </View>
-            )}
+            ) : null}
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -39,8 +39,7 @@ const Scan = ({navigation}) => {
 
   const recognizeTextFromImage = async e => {
     const result = await TextRecognition.recognize(e);
-    setWords(result);
-
+    setWords(result.toString().replace(/,/g, ' '));
     setTranslated(
       result
         .toString()

@@ -21,6 +21,7 @@ const Translate = ({navigation}) => {
   const Vocabulary = useSelector(state => state.word.value);
   const [word, setWord] = useState('');
   const [translated, setTranslated] = useState('');
+  const [result, setResult] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,42 +35,40 @@ const Translate = ({navigation}) => {
   }, []);
 
   const onSpeechStartHandler = e => {
-    console.log('start', e);
+    console.log('start handler==>>>', e);
   };
-
   const onSpeechEndHandler = e => {
-    console.log('stop', e);
+    setLoading(false);
+    console.log('stop handler', e);
   };
 
   const onSpeechResultsHandler = e => {
-    console.log('result', e);
+    let text = e.value[0];
+    console.log(text);
+    setResult(text);
+    console.log('speech result handler', e);
   };
 
-  const textSpeech = s => {
-    Speech.speak(s);
-  };
-
-  const onSpeechEnd = e => {
-    setLoading(false);
-  };
-
-  const onSpeechPartialResults = e => {
-    console.log('onSpeechPartialResults: ', e.value[0]);
-    // setResult(e.value[0]);
-    setWord(e.value[0]);
-  };
-
-  const startRecognizing = async () => {
+  const startRecording = async () => {
     setLoading(true);
     try {
       await Voice.start('en-Us');
-    } catch (e) {
-      console.log('error jamez', e);
+    } catch (error) {
+      console.log('error raised', error);
+    }
+  };
+
+  const stopRecording = async () => {
+    setLoading(false);
+    try {
+      await Voice.stop();
+    } catch (error) {
+      console.log('error raised', error);
     }
   };
 
   const stopRecognizing = async () => {
-    //Stops listening for speech
+    setLoading(false);
     try {
       await Voice.stop();
     } catch (e) {
@@ -130,6 +129,7 @@ const Translate = ({navigation}) => {
                                 e.English + 's' === word.toLocaleLowerCase(),
                             ).map(f => f.Yakan),
                         )
+
                         .join(' ')
                         .replace(',', '/'),
                     );
@@ -159,12 +159,11 @@ const Translate = ({navigation}) => {
                 <FontAwesome name="camera" size={20} color="#407BFF" />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={startRecognizing}
+                onPress={startRecording}
                 style={{marginLeft: 20}}>
                 <FontAwesome name="microphone" size={20} color="#407BFF" />
               </TouchableOpacity>
               <Text
-                onPress={() => stopRecognizing()}
                 style={{
                   color: '#808080',
                   marginLeft: 20,
@@ -241,6 +240,9 @@ const Translate = ({navigation}) => {
               </View>
             </View>
           )}
+
+          {isLoading && <Text>Recording</Text>}
+          <Text>{result}</Text>
         </ScrollView>
       </SafeAreaView>
     </>

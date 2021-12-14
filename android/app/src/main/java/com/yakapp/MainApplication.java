@@ -19,6 +19,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactPackage;
 import com.wenkesj.voice.VoicePackage;
 
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
